@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GK Avrasya Avukatlık Bürosu · İstanbul</title>
+<meta name="description" content="GK Avrasya Avukatlık Bürosu — İstanbul merkezli hukuki danışmanlık ve dava takibi.">
+<meta name="theme-color" content="#171717">
+<link rel="icon" type="image/png" href="./assets/mark-light.png">
+<link rel="preload" href="./assets/hero-film.mp4" as="fetch" crossorigin="anonymous">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Noto+Sans:wght@400;500;600&amp;family=Noto+Naskh+Arabic:wght@400;500;600&amp;family=Noto+Sans+Arabic:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script src="./env.js"></script>
+<style>
+html,body{margin:0;background:#171717;color:#F7F4ED;font-family:'Noto Sans','Noto Sans Arabic',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+a:hover{color:#C8A96B}
+::selection{background:#B08A45;color:#171717}
+input,textarea,select,button{font-family:inherit}
+html[dir=rtl] *{letter-spacing:0!important}
+html[dir=rtl] em{font-style:normal!important}
+html[dir=rtl] h1,html[dir=rtl] h2{line-height:1.32!important}
+</style>
+</helmet>
+
+<header data-screen-label="Navigasyon" style="position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px clamp(20px,5vw,80px);box-sizing:border-box">
+  <div ref="{{ navBgRef }}" style="position:absolute;inset:0;background:rgba(23,23,23,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(176,138,69,.18);opacity:0;transition:opacity .6s ease;pointer-events:none"></div>
+  <a href="#/" style="position:relative;display:flex;align-items:center;gap:14px">
+    <img src="./assets/mark-light.png" alt="GK Avrasya" style="height:44px;width:auto;display:block">
+    <img src="./assets/word-light.png" alt="GK Avrasya Avukatlık Bürosu" style="height:20px;width:auto;display:block">
+  </a>
+  <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+    <nav style="position:relative;display:flex;align-items:center;gap:clamp(18px,2.4vw,40px)">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" style="position:relative;font-size:11.5px;font-weight:500;letter-spacing:.16em;padding:8px 0;color:#F7F4ED;transition:color .4s">
+          <span>{{ n.label }}</span>
+          <sc-if value="{{ n.active }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;left:0;right:0;bottom:0;height:1px;background:#B08A45"></span></sc-if>
+        </a>
+      </sc-for>
+      <div style="display:flex;align-items:center;gap:14px">
+        <sc-for list="{{ langs }}" as="lg" hint-placeholder-count="3"><button onClick="{{ lg.pick }}" title="{{ lg.name }}" aria-label="{{ lg.name }}" style="background:none;border:0;border-bottom:1px solid {{ lg.line }};padding:6px 0;cursor:pointer;color:{{ lg.color }};font-size:11px;font-weight:600;letter-spacing:.1em;transition:color .4s">{{ lg.code }}</button></sc-for>
+      </div>
+      <a href="#/iletisim" style="font-size:11.5px;font-weight:600;letter-spacing:.16em;padding:12px 20px;border:1px solid rgba(176,138,69,.45);color:#F7F4ED;transition:background .4s,color .4s" style-hover="background:#B08A45;color:#171717">{{ t.cta }}</a>
+    </nav>
+  </sc-if>
+  <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ toggleMenu }}" style="position:relative;background:none;border:1px solid rgba(247,244,237,.3);color:#F7F4ED;font-size:11px;font-weight:600;letter-spacing:0.13em;padding:14px 18px;cursor:pointer;min-height:44px">{{ menuLabel }}</button>
+  </sc-if>
+</header>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:70;background:#171717;display:flex;flex-direction:column;justify-content:flex-end;padding:120px 24px 40px;box-sizing:border-box">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:44px;line-height:1.1;color:#F7F4ED;border-bottom:1px solid #2e2e2e;padding:10px 0">{{ n.title }}</a>
+      </sc-for>
+    </div>
+    <div style="margin-top:40px;font-size:12px;letter-spacing:.16em;color:#8f8b84">{{ t.firmLine }}</div>
+    <div style="display:flex;gap:28px;margin-top:28px">
+      <sc-for list="{{ langs }}" as="lg" hint-placeholder-count="3"><button onClick="{{ lg.pick }}" style="background:none;border:0;border-bottom:1px solid {{ lg.line }};padding:10px 0;min-height:44px;cursor:pointer;color:{{ lg.color }};font-size:14px">{{ lg.name }}</button></sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<main>
+<!-- ===================== HOME ===================== -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+
+<div ref="{{ hr.wrap }}" data-screen-label="01 Hero sahnesi" style="position:relative;height:400vh">
+  <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#171717">
+
+    <div ref="{{ hr.clip }}" style="position:absolute;inset:0;clip-path:inset(9vh 0px 11vh 50vw);will-change:clip-path,mask-image">
+      <video ref="{{ hr.imgA }}" muted="" playsinline="" preload="auto" disablepictureinpicture="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;transform:scale(1.08);filter:saturate(.5) sepia(.14) contrast(1.08) brightness(.8);background:#171717;will-change:transform"></video>
+      <div ref="{{ hr.shade }}" style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(23,23,23,.85) 0%,rgba(23,23,23,.35) 55%,rgba(23,23,23,.15) 100%),linear-gradient(0deg,rgba(23,23,23,.7),rgba(23,23,23,0) 50%);opacity:.6"></div>
+    </div>
+
+    <div ref="{{ hr.h1 }}" style="position:absolute;left:clamp(20px,5vw,80px);width:43vw;bottom:clamp(40px,9vh,96px);will-change:transform,opacity">
+      <div style="display:flex;align-items:center;gap:16px;font-size:11px;font-weight:500;letter-spacing:0.18em;color:#C8A96B"><span style="width:44px;height:1px;background:#B08A45"></span><span>{{ t.heroEyebrow }}</span></div>
+      <h1 style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(36px,min(5.4vw,8.8vh),104px);line-height:1.04;margin:26px 0 0">
+        <span ref="{{ hr.l1 }}" style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" style="display:block">{{ t.heroL1 }}</span></span>
+        <span ref="{{ hr.l2 }}" style="display:block;overflow:hidden;padding-bottom:.1em;padding-right:.1em"><span data-reveal="line" data-delay="140" style="display:block">{{ t.heroL2a }} <em style="font-style:italic;color:#C8A96B">{{ t.heroL2b }}</em></span></span>
+      </h1>
+      <div ref="{{ hr.sub }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:32px;margin-top:clamp(24px,4vh,44px)">
+        <p style="margin:0;max-width:360px;font-size:16px;line-height:1.8;color:#cdc8bd">{{ t.heroSub }}</p>
+        <a href="#/iletisim" style="display:inline-flex;align-items:center;gap:18px;color:#F7F4ED;border:1px solid rgba(200,169,107,.5);padding:15px 22px;font-size:11.5px;font-weight:600;letter-spacing:.18em;transition:border-color .5s ease,gap .6s cubic-bezier(.22,.61,.12,1)" style-hover="border-color:#C8A96B;gap:26px;color:#F7F4ED">{{ t.cta }} <span style="font-size:13px;color:#C8A96B">{{ t.arrow }}</span></a>
+      </div>
+    </div>
+
+    <div ref="{{ hr.cap }}" style="position:absolute;left:clamp(20px,5vw,80px);right:clamp(20px,5vw,80px);top:50%;transform:translateY(-50%);opacity:0;will-change:transform,opacity">
+      <div style="font-size:11px;font-weight:500;letter-spacing:0.18em;color:#C8A96B">{{ t.capEyebrow }}</div>
+      <div style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,5.12vw,94px);line-height:1.06;margin-top:28px;max-width:13ch;text-wrap:balance">{{ t.capA }} <em style="font-style:italic;color:#d9d2c3">{{ t.capB }}</em> {{ t.capC }}</div>
+      <div style="margin-top:44px;height:1px;width:min(420px,60vw);background:rgba(247,244,237,.14)"><div ref="{{ hr.line }}" style="height:1px;background:#B08A45;transform:scaleX(0);transform-origin:0 50%"></div></div>
+    </div>
+
+    <a ref="{{ hr.hint }}" href="#/calisma-alanlarimiz" style="position:absolute;right:clamp(20px,5vw,80px);bottom:clamp(14px,3vh,30px);display:flex;align-items:center;gap:14px;font-size:10.5px;font-weight:500;letter-spacing:0.17em;color:#8f8b84"><span>{{ t.areasUpper }}</span><span style="color:#5f5b55">08</span><span style="color:#B08A45">↓</span></a>
+
+    <div style="position:absolute;left:clamp(8px,1.6vw,28px);top:30vh;height:40vh;width:1px;background:rgba(247,244,237,.08)"><div ref="{{ hr.prog }}" style="height:100%;width:1px;background:#B08A45;transform:scaleY(0);transform-origin:50% 0"></div></div>
+
+    <div ref="{{ hr.ivory }}" style="position:absolute;inset:0;background:#F7F4ED;transform:translateY(100%);will-change:transform">
+      
+    </div>
+  </div>
+</div>
+
+<section data-screen-label="02 Manifesto" style="position:relative;display:grid;place-items:center;background:#F7F4ED;color:#171717;overflow:hidden;padding:18vh clamp(20px,5vw,80px);box-sizing:border-box">
+  <div style="position:relative;z-index:2;text-align:center;max-width:1100px">
+    <div data-reveal="fade" style="font-size:11px;letter-spacing:0.2em;color:#8a6a2f;margin-bottom:36px">{{ t.approach }}</div>
+    <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,5.28vw,94px);line-height:1;margin:0;text-wrap:balance">{{ t.manA }} <em style="color:#6b5a3a">{{ t.manB }}</em> {{ t.manC }}</h2>
+    <p data-reveal="up" data-delay="200" style="margin:40px auto 0;max-width:400px;font-size:16px;line-height:1.8;color:#4a4a4a">{{ t.manP }}</p>
+  </div>
+</section>
+
+<section data-screen-label="03 Hakkımızda" style="background:#FFFFFF;color:#171717;padding:16vh clamp(20px,5vw,80px)">
+  
+  <div style="display:flex;flex-wrap:wrap;gap:clamp(32px,7vw,120px);align-items:flex-start">
+    <div style="flex:1 1 340px;max-width:560px">
+      <div data-reveal="mask" style="position:relative;aspect-ratio:4/5;overflow:hidden"><img data-par="" src="./assets/brand-book.jpg" alt="GK Avrasya — marka görseli" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;display:block;will-change:transform;filter:saturate(.6) contrast(1.06) brightness(.97);"></div>
+      
+    </div>
+    <div style="flex:1 1 380px;padding-top:clamp(0px,8vh,120px)">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.18em;color:#8a6a2f;margin-bottom:28px">{{ t.aboutUpper }}</div>
+      <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:400;font-size:clamp(32px,3.52vw,59px);line-height:1.04;margin:0;text-wrap:balance">{{ t.abA }} <em style="color:#6b5a3a">{{ t.abB }}</em> {{ t.abC }}</h2>
+      <p data-reveal="up" data-delay="120" style="margin:36px 0 0;max-width:520px;font-size:16px;line-height:1.75;color:#4a4a4a">{{ t.abP }}</p>
+      <a href="#/hakkimizda" data-reveal="up" data-delay="300" style="display:inline-flex;gap:14px;margin-top:48px;font-size:12px;font-weight:600;letter-spacing:.16em;padding:8px 0;border-bottom:1px solid #B08A45;color:#171717">{{ t.abLink }}</a>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="04 Çalışma Alanları" style="position:relative;background:#171717;padding:16vh clamp(20px,5vw,80px)">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px">
+    <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(40px,5.12vw,90px);line-height:1.04;margin:0">{{ t.areasH1 }}<br><em style="color:#d9d2c3">{{ t.areasH2 }}</em></h2>
+    <p data-reveal="up" data-delay="150" style="margin:0;max-width:340px;font-size:15px;line-height:1.7;color:#bdb8ad">{{ t.areasP }}</p>
+  </div>
+  <div style="margin-top:8vh;border-top:1px solid #2e2e2e">
+    <sc-for list="{{ areas }}" as="a" hint-placeholder-count="6">
+      <a href="{{ a.href }}" style="display:grid;grid-template-columns:clamp(36px,6vw,96px) minmax(0,1fr) auto;align-items:center;gap:clamp(12px,3vw,48px);padding:clamp(18px,2.8vh,30px) 0;border-bottom:1px solid #2e2e2e;color:#F7F4ED;transition:color .5s ease,padding .7s cubic-bezier(.2,.7,.1,1),border-color .5s" style-hover="color:#C8A96B;padding-inline-start:16px">
+        <span style="font-size:12px;font-weight:600;letter-spacing:0.13em;color:#B08A45">{{ a.no }}</span>
+        <span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(23px,2.88vw,48px);line-height:1.05">{{ a.title }}</span>
+        <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}"><span style="max-width:280px;font-size:13px;line-height:1.6;color:#8f8b84">{{ a.short }}</span></sc-if>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<section data-screen-label="05 İstanbul" style="position:relative;height:88vh;min-height:560px;overflow:hidden;background:#101010">
+  <div data-reveal="fade" style="position:absolute;inset:0;overflow:hidden"><img data-par="" src="./assets/brand-bosphorus.jpg" alt="Boğaz ve GK Avrasya" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;object-position:50% 50%;display:block;will-change:transform;filter:saturate(.85) contrast(1.04);"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(23,23,23,.55) 0%,rgba(23,23,23,0) 45%),linear-gradient(0deg,rgba(23,23,23,.75) 0%,rgba(23,23,23,0) 45%)"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:flex-end;padding:16vh clamp(20px,5vw,80px) 10vh">
+    
+    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:28px;max-width:min(560px,100%)">
+      <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(42px,5.6vw,99px);line-height:1.02;margin:0">{{ t.istA }}<br>{{ t.istB }} <em style="color:#d9d2c3">{{ t.istC }}</em></h2>
+      <p data-reveal="up" data-delay="200" style="margin:0;max-width:340px;font-size:15px;line-height:1.75;color:#e4dfd4">{{ t.istP }}</p>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="06 Avukatlar" style="background:#F7F4ED;color:#171717;padding:16vh clamp(20px,5vw,80px)">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:8vh">
+    <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(40px,5.12vw,90px);line-height:1.04;margin:0">{{ t.lawH1 }}<em style="color:#6b5a3a">{{ t.lawH2 }}</em></h2>
+    
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:clamp(32px,5vw,80px);align-items:flex-start">
+    <sc-for list="{{ lawyers }}" as="l" hint-placeholder-count="2">
+      <div style="flex:1 1 320px">
+        <div data-reveal="mask" style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#ECE6DA;display:grid;place-items:center"><span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(63px,7.2vw,120px);letter-spacing:.04em;color:#C9BFAC;line-height:1">{{ l.ini }}</span></div>
+        <a href="{{ l.href }}" style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(176,138,69,.5);color:#171717">
+          <span>
+            <span style="display:block;font-size:11px;font-weight:600;letter-spacing:0.18em;color:#8a6a2f">{{ t.av }}</span>
+            <span style="display:block;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:400;font-size:clamp(33px,3.52vw,58px);line-height:1;margin-top:10px">{{ l.name }}</span>
+            <span style="display:block;font-size:13px;color:#6b6b6b;margin-top:8px">{{ l.baroLine }}</span>
+          </span>
+          <span style="font-size:12px;font-weight:600;letter-spacing:.16em;padding:6px 0;border-bottom:1px solid #B08A45;white-space:nowrap">{{ t.profile }}</span>
+        </a>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section data-screen-label="07 Hukuki Bilgiler" style="background:#171717;color:#F7F4ED;padding:16vh clamp(20px,5vw,80px)">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:8vh">
+    <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(40px,5.12vw,90px);line-height:1.04;margin:0">{{ t.insA }} <em style="color:#d9d2c3">{{ t.insB }}</em></h2>
+    <a href="#/hukuki-bilgiler" style="font-size:12px;font-weight:600;letter-spacing:.16em;padding:8px 0;border-bottom:1px solid #B08A45;color:#F7F4ED">{{ t.allPosts }}</a>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:64px clamp(24px,3vw,56px);align-items:start">
+    <sc-for list="{{ latest }}" as="p" hint-placeholder-count="3">
+      <a href="#/hukuki-bilgiler" style="display:flex;flex-direction:column;gap:20px;color:#F7F4ED;padding-top:{{ p.offset }}">
+        <span style="position:relative;display:block;aspect-ratio:4/5"><span data-reveal="mask" style="position:absolute;inset:0;overflow:hidden;display:block"><img data-par="" src="{{ p.img }}" alt="{{ p.title }}" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;display:block;will-change:transform;filter:saturate(.6) contrast(1.06) brightness(.97);"></span></span>
+        <span data-reveal="up" data-delay="250" style="display:flex;flex-direction:column;gap:16px">
+          <span style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;letter-spacing:0.13em"><span style="color:#C8A96B">{{ p.catUpper }}</span><span style="color:#8f8b84">{{ p.date }}</span></span>
+          <span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:400;font-size:clamp(26px,2.3vw,36px);line-height:1.15;text-wrap:balance">{{ p.title }}</span>
+          <span style="font-size:14px;line-height:1.65;color:#bdb8ad">{{ p.excerpt }}</span>
+        </span>
+      </a>
+    </sc-for>
+  </div>
+</section>
+</sc-if>
+
+<!-- ===================== HAKKIMIZDA ===================== -->
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Hakkımızda — Hero" style="position:relative;min-height:84vh;background:#171717;padding:clamp(150px,24vh,240px) clamp(20px,5vw,80px) 10vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+  <div style="position:absolute;top:0;inset-inline-end:0;bottom:0;width:min(48vw,820px)"><div data-reveal="mask" style="position:absolute;inset:0;overflow:hidden"><img data-par="" src="./assets/brand-office.jpg" alt="GK Avrasya — marka görseli" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;display:block;will-change:transform;filter:saturate(.6) contrast(1.06) brightness(.97);"></div><div style="position:absolute;inset:0;background:linear-gradient(var(--gk-g,90deg),#171717 0%,rgba(23,23,23,.6) 40%,rgba(23,23,23,.25) 100%),linear-gradient(0deg,rgba(23,23,23,.55),rgba(23,23,23,0) 40%)"></div></div>
+  <div style="position:relative;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:0.14em;color:#8f8b84"><a href="#/">{{ t.homeUpper }}</a><span style="color:#B08A45">/</span><span style="color:#F7F4ED">{{ t.aboutUpper }}</span></div>
+  <h1 style="position:relative;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(48px,8vw,147px);line-height:1.02;margin:5vh 0 0">
+    <span style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" style="display:block">{{ t.aboutH1a }}</span></span>
+    <span style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" data-delay="70" style="display:block">{{ t.aboutH1b }}</span></span>
+    <span style="display:block;overflow:hidden;padding-bottom:.1em"><span data-reveal="line" data-delay="140" style="display:block"><em style="color:#d9d2c3">{{ t.aboutH1c }}</em></span></span>
+  </h1>
+  <p data-reveal="up" data-delay="300" style="position:relative;margin:6vh 0 0;margin-inline-start:auto;max-width:400px;font-size:16px;line-height:1.8;color:#cdc8bd">{{ t.aboutHeroP }}</p>
+</section>
+<section data-screen-label="Hakkımızda — Hikâye" style="background:#F7F4ED;color:#171717;padding:16vh clamp(20px,5vw,80px)">
+  <div style="display:flex;flex-wrap:wrap;gap:clamp(32px,6vw,100px);">
+    <h2 data-reveal="up" style="flex:1 1 300px;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(39px,4.32vw,77px);line-height:1.04;margin:0">{{ t.buroA }}<em style="color:#6b5a3a">{{ t.buroB }}</em></h2>
+    <div style="flex:2 1 420px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px;font-size:16px;line-height:1.8;color:#4a4a4a">
+      <p data-reveal="up" style="margin:0">{{ t.story1 }}</p>
+      <p data-reveal="up" data-delay="120" style="margin:0">{{ t.story2 }}</p>
+    </div>
+  </div>
+</section>
+<section data-screen-label="Hakkımızda — İlkeler" style="background:#171717;padding:16vh clamp(20px,5vw,80px)">
+  <div style="font-size:11px;letter-spacing:0.2em;color:#B08A45;margin-bottom:8vh">{{ t.principlesLabel }}</div>
+  <sc-for list="{{ principles }}" as="p" hint-placeholder-count="3">
+    <div data-reveal="up" style="display:grid;grid-template-columns:clamp(36px,6vw,96px) minmax(0,1fr) minmax(0,380px);gap:clamp(16px,3vw,48px);align-items:baseline;padding:clamp(24px,4vh,44px) 0;border-top:1px solid #2e2e2e">
+      <span style="font-size:12px;font-weight:600;letter-spacing:0.13em;color:#B08A45">{{ p.no }}</span>
+      <span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,4.8vw,83px);line-height:1">{{ p.title }}</span>
+      <span style="font-size:15px;line-height:1.7;color:#bdb8ad">{{ p.text }}</span>
+    </div>
+  </sc-for>
+</section>
+
+</sc-if>
+
+<!-- ===================== ÇALIŞMA ALANLARI ===================== -->
+<sc-if value="{{ isAreas }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Alanlar — Hero" style="position:relative;min-height:72vh;background:#171717;padding:clamp(150px,24vh,240px) clamp(20px,5vw,80px) 10vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+  <div style="position:absolute;top:0;inset-inline-end:0;bottom:0;width:min(48vw,820px)"><div data-reveal="mask" style="position:absolute;inset:0;overflow:hidden"><img data-par="" src="https://images.unsplash.com/photo-1603644448048-28a7e5122f0a?auto=format&amp;fit=crop&amp;w=1800&amp;q=72" alt="Adliye sütunları" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;display:block;will-change:transform;filter:saturate(.6) contrast(1.06) brightness(.97);"></div><div style="position:absolute;inset:0;background:linear-gradient(var(--gk-g,90deg),#171717 0%,rgba(23,23,23,.6) 40%,rgba(23,23,23,.25) 100%),linear-gradient(0deg,rgba(23,23,23,.55),rgba(23,23,23,0) 40%)"></div></div>
+  <div style="position:relative;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:0.14em;color:#8f8b84"><a href="#/">{{ t.homeUpper }}</a><span style="color:#B08A45">/</span><span style="color:#F7F4ED">{{ t.areasUpper }}</span></div>
+  <h1 style="position:relative;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(48px,8vw,147px);line-height:1.02;margin:5vh 0 0">
+    <span style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" style="display:block">{{ t.areasH1 }}</span></span>
+    <span style="display:block;overflow:hidden;padding-bottom:.1em"><span data-reveal="line" data-delay="140" style="display:block;padding-inline-start:12vw"><em style="color:#d9d2c3">{{ t.areasH2 }}</em></span></span>
+  </h1>
+  <p data-reveal="up" data-delay="300" style="position:relative;margin:6vh 0 0;margin-inline-start:auto;max-width:400px;font-size:16px;line-height:1.8;color:#cdc8bd">{{ t.areasHeroP }}</p>
+</section>
+<section data-screen-label="Alanlar — Liste" style="background:#F7F4ED;color:#171717;padding:10vh clamp(20px,5vw,80px) 14vh">
+  <sc-for list="{{ areas }}" as="a" hint-placeholder-count="6">
+    <a href="{{ a.href }}" data-reveal="up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px clamp(24px,4vw,64px);align-items:start;padding:clamp(32px,6vh,64px) clamp(0px,1vw,16px);border-top:1px solid #d9d2c3;color:#171717;transition:background .5s,padding .7s cubic-bezier(.2,.7,.1,1)" style-hover="background:#efe8d8;color:#171717">
+      <span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,3.2vw,54px);line-height:1;color:#B08A45">{{ a.no }}</span>
+      <span>
+        <span style="display:block;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:400;font-size:clamp(30px,3.2vw,52px);line-height:1.05">{{ a.title }}</span>
+        <span style="display:block;margin-top:14px;font-size:15px;line-height:1.7;color:#4a4a4a">{{ a.short }}</span>
+      </span>
+      <span style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:#4a4a4a">
+        <sc-for list="{{ a.scopeTop }}" as="s" hint-placeholder-count="3"><span style="display:flex;gap:12px"><span style="color:#B08A45">—</span>{{ s.text }}</span></sc-for>
+        <span style="margin-top:10px;font-size:12px;font-weight:600;letter-spacing:.16em;color:#171717">{{ t.detail }}</span>
+      </span>
+    </a>
+  </sc-for>
+</section>
+</sc-if>
+
+<!-- ===================== ALAN DETAY ===================== -->
+<sc-if value="{{ isArea }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Alan — Hero" style="position:relative;min-height:72vh;background:#171717;padding:clamp(150px,24vh,240px) clamp(20px,5vw,80px) 10vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+  <div style="position:absolute;top:0;inset-inline-end:0;bottom:0;width:min(48vw,820px)"><div data-reveal="mask" style="position:absolute;inset:0;overflow:hidden"><img data-par="" src="{{ area.img }}" alt="{{ area.title }}" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;display:block;will-change:transform;filter:saturate(.6) contrast(1.06) brightness(.97);"></div><div style="position:absolute;inset:0;background:linear-gradient(var(--gk-g,90deg),#171717 0%,rgba(23,23,23,.6) 40%,rgba(23,23,23,.25) 100%)"></div></div>
+  <div style="position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:11px;letter-spacing:0.14em;color:#8f8b84"><a href="#/">{{ t.homeUpper }}</a><span style="color:#B08A45">/</span><a href="#/calisma-alanlarimiz">{{ t.areasUpper }}</a><span style="color:#B08A45">/</span><span style="color:#F7F4ED">{{ area.name }}</span></div>
+  <h1 style="position:relative;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(42px,6.88vw,128px);line-height:1.04;margin:5vh 0 0;max-width:12ch">
+    <span style="display:block;overflow:hidden;padding-bottom:.08em"><span data-reveal="line" style="display:block">{{ area.name }}</span></span>
+  </h1>
+  <p data-reveal="up" data-delay="250" style="position:relative;margin:6vh 0 0;margin-inline-start:auto;max-width:400px;font-size:16px;line-height:1.8;color:#cdc8bd">{{ area.short }}</p>
+</section>
+<section data-screen-label="Alan — İçerik" style="background:#F7F4ED;color:#171717;padding:14vh clamp(20px,5vw,80px)">
+  <div style="display:flex;flex-wrap:wrap;gap:clamp(40px,7vw,120px);align-items:flex-start">
+    <aside style="flex:1 1 280px;position:sticky;top:110px">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.18em;color:#8a6a2f;margin-bottom:24px">{{ t.scope }}</div>
+      <sc-for list="{{ area.scope }}" as="s" hint-placeholder-count="5">
+        <div data-reveal="up" style="display:flex;gap:18px;align-items:baseline;padding:18px 0;border-top:1px solid #d9d2c3;font-size:15px;line-height:1.5"><span style="font-size:11px;font-weight:600;letter-spacing:.16em;color:#B08A45">{{ s.no }}</span>{{ s.text }}</div>
+      </sc-for>
+    </aside>
+    <div style="flex:2 1 440px">
+      <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:400;font-size:clamp(30px,3.04vw,51px);line-height:1.08;margin:0;text-wrap:balance">{{ area.lead }}</h2>
+      <div style="height:8vh"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px;font-size:16px;line-height:1.8;color:#4a4a4a">
+        <p data-reveal="up" style="margin:0">{{ t.proc1 }}</p>
+        <p data-reveal="up" data-delay="120" style="margin:0">{{ t.proc2 }}</p>
+      </div>
+      
+    </div>
+  </div>
+</section>
+<a href="{{ next.href }}" data-screen-label="Alan — Sonraki" style="display:block;background:#171717;padding:14vh clamp(20px,5vw,80px);color:#F7F4ED;transition:color .5s" style-hover="color:#C8A96B">
+  <div style="font-size:11px;letter-spacing:0.2em;color:#B08A45">{{ t.nextArea }} {{ next.no }}</div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:24px"><span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(39px,5.92vw,109px);line-height:1.04">{{ next.name }}</span><span style="font-size:clamp(28px,3.2vw,51px);font-weight:300">{{ t.arrow }}</span></div>
+</a>
+</sc-if>
+
+<!-- ===================== AVUKATLARIMIZ ===================== -->
+<sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Avukatlar — Hero" style="position:relative;min-height:58vh;background:#171717;padding:clamp(150px,24vh,240px) clamp(20px,5vw,80px) 10vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+  <div style="position:absolute;top:0;inset-inline-end:0;bottom:0;width:min(48vw,820px)"><div data-reveal="mask" style="position:absolute;inset:0;overflow:hidden"><img data-par="" src="./assets/brand-globe.jpg" alt="GK Avrasya — marka görseli" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;object-position:50% 40%;display:block;will-change:transform;filter:saturate(.55) sepia(.12) contrast(1.06) brightness(.85);"></div><div style="position:absolute;inset:0;background:linear-gradient(var(--gk-g,90deg),#171717 0%,rgba(23,23,23,.6) 40%,rgba(23,23,23,.25) 100%),linear-gradient(0deg,rgba(23,23,23,.55),rgba(23,23,23,0) 40%)"></div></div>
+  <div style="position:relative;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:0.14em;color:#8f8b84"><a href="#/">{{ t.homeUpper }}</a><span style="color:#B08A45">/</span><span style="color:#F7F4ED">{{ t.lawyersUpper }}</span></div>
+  <h1 style="position:relative;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(48px,8vw,147px);line-height:1.02;margin:5vh 0 0">
+    <span style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" style="display:block">{{ t.teamA }}</span></span>
+    <span style="display:block;overflow:hidden;padding-bottom:.1em"><span data-reveal="line" data-delay="140" style="display:block"><em style="color:#d9d2c3">{{ t.teamB }}</em></span></span>
+  </h1>
+</section>
+<section data-screen-label="Avukatlar — Portreler" style="background:#F7F4ED;color:#171717;padding:12vh clamp(20px,5vw,80px) 14vh;display:flex;flex-wrap:wrap;gap:clamp(32px,5vw,80px)">
+  <sc-for list="{{ lawyers }}" as="l" hint-placeholder-count="2">
+    <div style="flex:1 1 340px">
+      <div data-reveal="mask" style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#ECE6DA;display:grid;place-items:center"><span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(63px,7.2vw,120px);letter-spacing:.04em;color:#C9BFAC;line-height:1">{{ l.ini }}</span></div>
+      <a href="{{ l.href }}" style="display:block;padding-top:28px;color:#171717">
+        <span style="display:block;font-size:11px;letter-spacing:0.18em;color:#8a6a2f">{{ t.av }}</span>
+        <span style="display:block;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,4vw,70px);line-height:1.06;margin-top:14px">{{ l.first }}<br><em style="color:#6b5a3a">{{ l.last }}</em></span>
+        <span style="display:block;margin-top:14px;font-size:13px;line-height:1.6;color:#6b6b6b">{{ l.baroLine }}</span>
+        <span style="display:inline-block;margin-top:24px;font-size:12px;font-weight:600;letter-spacing:.16em;padding:8px 0;border-bottom:1px solid #B08A45">{{ t.profile }}</span>
+      </a>
+    </div>
+  </sc-for>
+</section>
+</sc-if>
+
+<!-- ===================== AVUKAT DETAY ===================== -->
+<sc-if value="{{ isLawyer }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Avukat — Profil" style="background:#171717;padding:clamp(120px,18vh,180px) clamp(20px,5vw,80px) 14vh;display:flex;flex-wrap:wrap;gap:clamp(40px,7vw,120px);align-items:flex-start">
+  <div style="flex:1 1 340px;max-width:620px;position:sticky;top:100px">
+    <div data-reveal="mask" style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#242424;display:grid;place-items:center"><span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(63px,7.2vw,120px);letter-spacing:.04em;color:#4a463f;line-height:1">{{ lawyer.ini }}</span></div>
+  </div>
+  <div style="flex:1 1 400px">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:11px;letter-spacing:0.14em;color:#8f8b84"><a href="#/avukatlarimiz">{{ t.lawyersUpper }}</a><span style="color:#B08A45">/</span><span style="color:#F7F4ED">{{ lawyer.full }}</span></div>
+    <div style="margin-top:8vh;font-size:11px;font-weight:600;letter-spacing:0.2em;color:#B08A45">{{ t.av }}</div>
+    <h1 style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(48px,5.92vw,106px);line-height:1.02;margin:14px 0 0">
+      <span style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" style="display:block">{{ lawyer.first }}</span></span>
+      <span style="display:block;overflow:hidden;padding-bottom:.1em"><span data-reveal="line" data-delay="120" style="display:block"><em style="color:#d9d2c3">{{ lawyer.last }}</em></span></span>
+    </h1>
+    <div style="margin-top:8vh;display:flex;flex-direction:column;gap:22px;font-size:16px;line-height:1.8;color:#cdc8bd;max-width:560px">
+      <sc-for list="{{ lawyer.bio }}" as="b" hint-placeholder-count="2"><p data-reveal="up" style="margin:0">{{ b }}</p></sc-for>
+    </div>
+    <div style="margin-top:6vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:24px 40px;max-width:560px;border-top:1px solid #2e2e2e;padding-top:28px">
+      <div><div style="font-size:11px;font-weight:600;letter-spacing:0.16em;color:#8f8b84">{{ t.bar }}</div><div style="margin-top:10px;font-size:16px;color:#F7F4ED">{{ lawyer.bar }}</div></div>
+      <div><div style="font-size:11px;font-weight:600;letter-spacing:0.16em;color:#8f8b84">{{ t.sicil }}</div><div style="margin-top:10px;font-size:16px;color:#F7F4ED">{{ lawyer.sicil }}</div></div>
+      <div><div style="font-size:11px;font-weight:600;letter-spacing:0.16em;color:#8f8b84">{{ t.workLoc }}</div><div style="margin-top:10px;font-size:16px;color:#F7F4ED">{{ lawyer.districtCity }}</div><a href="{{ lawyer.mapHref }}" style="display:inline-block;margin-top:12px;font-size:11px;font-weight:600;letter-spacing:0.13em;padding-bottom:4px;border-bottom:1px solid #B08A45;color:#F7F4ED">{{ t.seeMap }}</a></div>
+    </div>
+    <div style="margin-top:8vh;display:flex;flex-wrap:wrap;gap:28px;align-items:center">
+      <a href="#/iletisim" style="display:flex;gap:14px;background:#171717;color:#F7F4ED;border:1px solid rgba(200,169,107,.55);padding:19px 30px;font-size:12px;font-weight:600;letter-spacing:.16em" style-hover="background:#F7F4ED;color:#171717;border-color:#F7F4ED">{{ t.appt }}</a>
+      
+    </div>
+  </div>
+</section>
+<a href="{{ otherLawyer.href }}" style="display:block;background:#F7F4ED;color:#171717;padding:12vh clamp(20px,5vw,80px);transition:color .5s" style-hover="color:#8a6a2f">
+  <div style="font-size:11px;font-weight:600;letter-spacing:0.2em;color:#8a6a2f">{{ t.otherLawyer }}</div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:20px"><span style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,4.8vw,86px);line-height:1.04">{{ otherLawyer.full }}</span><span style="font-size:clamp(28px,3.2vw,51px);font-weight:300">{{ t.arrow }}</span></div>
+</a>
+</sc-if>
+
+<!-- ===================== HUKUKİ BİLGİLER ===================== -->
+<sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Bilgiler — Hero" style="position:relative;min-height:76vh;background:#171717;padding:clamp(150px,24vh,240px) clamp(20px,5vw,80px) 10vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+  <div style="position:absolute;top:0;inset-inline-end:0;bottom:0;width:min(48vw,820px)"><div data-reveal="mask" style="position:absolute;inset:0;overflow:hidden"><img data-par="" src="https://images.unsplash.com/photo-1576414160011-98dfab3aa889?auto=format&amp;fit=crop&amp;w=1800&amp;q=72" alt="Hukuk kütüphanesi" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;display:block;will-change:transform;filter:saturate(.6) contrast(1.06) brightness(.97);"></div><div style="position:absolute;inset:0;background:linear-gradient(var(--gk-g,90deg),#171717 0%,rgba(23,23,23,.6) 40%,rgba(23,23,23,.25) 100%),linear-gradient(0deg,rgba(23,23,23,.55),rgba(23,23,23,0) 40%)"></div></div>
+  <div style="position:relative;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:0.14em;color:#8f8b84"><a href="#/">{{ t.homeUpper }}</a><span style="color:#B08A45">/</span><span style="color:#F7F4ED">{{ t.insUpper }}</span></div>
+  <h1 style="position:relative;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(48px,8vw,147px);line-height:1.02;margin:5vh 0 0">
+    <span style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" style="display:block">{{ t.insA }}</span></span>
+    <span style="display:block;overflow:hidden;padding-bottom:.1em"><span data-reveal="line" data-delay="140" style="display:block;padding-inline-start:8vw"><em style="color:#d9d2c3">{{ t.insB }}</em></span></span>
+  </h1>
+  <p data-reveal="up" data-delay="300" style="position:relative;margin:6vh 0 0;margin-inline-start:auto;max-width:400px;font-size:16px;line-height:1.8;color:#cdc8bd">{{ t.insHeroP }}</p>
+</section>
+<section data-screen-label="Bilgiler — Liste" style="background:#F7F4ED;color:#171717;padding:10vh clamp(20px,5vw,80px) 18vh">
+  
+  <sc-for list="{{ articles }}" as="p" hint-placeholder-count="6">
+    <a href="#/hukuki-bilgiler" data-reveal="up" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px 32px;align-items:baseline;padding:clamp(24px,4vh,40px) 0;border-top:1px solid #d9d2c3;color:#171717;transition:padding .6s cubic-bezier(.2,.7,.1,1)" style-hover="padding-inline-start:20px;color:#171717">
+      <span style="font-size:12px;letter-spacing:.14em;color:#777">{{ p.date }}</span>
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.13em;color:#8a6a2f">{{ p.catUpper }}</span>
+      <span style="grid-column:span 2;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:400;font-size:clamp(26px,2.6vw,40px);line-height:1.12">{{ p.title }}</span>
+      <span style="font-size:12px;letter-spacing:.14em;color:#777;text-align:end">{{ p.read }} {{ t.arrow }}</span>
+    </a>
+  </sc-for>
+</section>
+</sc-if>
+
+<!-- ===================== İLETİŞİM ===================== -->
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="İletişim — Hero" style="position:relative;min-height:58vh;background:#171717;padding:clamp(150px,24vh,240px) clamp(20px,5vw,80px) 10vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden">
+  <div style="position:absolute;top:0;inset-inline-end:0;bottom:0;width:min(48vw,820px)"><div data-reveal="mask" style="position:absolute;inset:0;overflow:hidden"><img data-par="" src="./assets/brand-desk.jpg" alt="GK Avrasya — marka görseli" style="position:absolute;left:0;top:-12%;width:100%;height:124%;object-fit:cover;object-position:60% 40%;display:block;will-change:transform;filter:saturate(.6) contrast(1.06) brightness(.85);"></div><div style="position:absolute;inset:0;background:linear-gradient(var(--gk-g,90deg),#171717 0%,rgba(23,23,23,.6) 40%,rgba(23,23,23,.25) 100%),linear-gradient(0deg,rgba(23,23,23,.55),rgba(23,23,23,0) 40%)"></div></div>
+  <div style="position:relative;display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:0.14em;color:#8f8b84"><a href="#/">{{ t.homeUpper }}</a><span style="color:#B08A45">/</span><span style="color:#F7F4ED">{{ t.contactUpper }}</span></div>
+  <h1 style="position:relative;font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(48px,8vw,147px);line-height:1.02;margin:5vh 0 0">
+    <span style="display:block;overflow:hidden;padding-bottom:.06em"><span data-reveal="line" style="display:block">{{ t.ctA }}</span></span>
+    <span style="display:block;overflow:hidden;padding-bottom:.1em"><span data-reveal="line" data-delay="140" style="display:block"><em style="color:#d9d2c3">{{ t.ctB }}</em></span></span>
+  </h1>
+</section>
+<section data-screen-label="İletişim — Konumlar" style="background:#F7F4ED;color:#171717;padding:12vh clamp(20px,5vw,80px) 12vh">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px 64px">
+    <div style="min-width:0">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.18em;color:#8a6a2f">{{ t.contactUpper }}</div>
+      <h2 style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(30px,2.88vw,48px);line-height:1.04;margin:20px 0 0;max-width:16ch">{{ t.ctH2 }}</h2>
+    </div>
+    <p style="margin:0;max-width:380px;font-size:15px;line-height:1.8;color:#4a4a4a">{{ t.ctP }}</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(48px,5vw,80px) clamp(32px,4vw,64px);margin-top:9vh">
+    <sc-for list="{{ locations }}" as="loc" hint-placeholder-count="2">
+      <div ref="{{ loc.wrapRef }}" style="min-width:0;display:flex;flex-direction:column">
+        <div style="border-top:1px solid #B08A45;padding-top:24px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.16em;color:#8a6a2f">{{ t.workLoc }} · {{ loc.no }}</div>
+          <div style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:400;font-size:clamp(30px,2.6vw,42px);line-height:1.1;margin-top:14px">{{ loc.name }}</div>
+          <div style="margin-top:10px;font-size:11px;font-weight:600;letter-spacing:0.14em;color:#171717">{{ loc.districtUpper }}</div>
+          <div style="margin-top:8px;font-size:15px;line-height:1.6;color:#6b6b6b">{{ loc.address }}</div>
+        </div>
+        <div style="position:relative;margin-top:28px;aspect-ratio:4/3;min-height:340px;max-height:520px;width:100%;background:#E9E5DC;border:1px solid #d9d2c3">
+          <sc-if value="{{ loc.useJsMap }}" hint-placeholder-val="{{ false }}"><div ref="{{ loc.mapRef }}" style="position:absolute;inset:0"></div></sc-if>
+          <sc-if value="{{ loc.useEmbed }}" hint-placeholder-val="{{ true }}"><iframe title="{{ loc.embedTitle }}" src="{{ loc.embedSrc }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen="" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe></sc-if>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <sc-if value="{{ hasChannels }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:0 clamp(32px,4vw,64px);margin-top:9vh;border-top:1px solid #d9d2c3">
+      <sc-for list="{{ channels }}" as="c" hint-placeholder-count="3">
+        <a href="{{ c.href }}" style="display:flex;align-items:flex-start;gap:18px;padding:28px 0;border-bottom:1px solid #d9d2c3;color:#171717">
+          <span style="flex:none;width:8px;height:8px;margin-top:7px;border:1px solid #B08A45;transform:rotate(45deg)"></span>
+          <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
+            <span style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#8a6a2f">{{ c.label }}</span>
+            <span style="font-size:17px;color:#171717;direction:ltr;unicode-bidi:isolate">{{ c.value }}</span>
+            <span style="font-size:11px;font-weight:600;letter-spacing:.14em;color:#171717">{{ c.cta }}</span>
+          </span>
+        </a>
+      </sc-for>
+    </div>
+  </sc-if>
+</section>
+<section data-screen-label="İletişim — Form" style="background:#FFFFFF;color:#171717;padding:12vh clamp(20px,5vw,80px) 14vh;display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,96px);align-items:flex-start">
+  <div style="flex:1 1 320px;min-width:0">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.18em;color:#8a6a2f">{{ t.appt }}</div>
+    <h2 style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(30px,2.88vw,48px);line-height:1.04;margin:20px 0 0;max-width:12ch">{{ t.formH }}</h2>
+  </div>
+  <div style="flex:1.4 1 420px;min-width:0">
+    <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:36px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:36px">
+          <label style="display:flex;flex-direction:column;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.13em;color:#6b6b6b">{{ t.fName }}<input required="" style="border:0;border-bottom:1px solid #bfb7a6;background:transparent;padding:10px 0;font-size:18px;color:#171717;outline:none"></label>
+          <label style="display:flex;flex-direction:column;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.13em;color:#6b6b6b">{{ t.fPhone }}<input type="tel" style="border:0;border-bottom:1px solid #bfb7a6;background:transparent;padding:10px 0;font-size:18px;color:#171717;outline:none"></label>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.13em;color:#6b6b6b">{{ t.fEmail }}<input type="email" required="" style="border:0;border-bottom:1px solid #bfb7a6;background:transparent;padding:10px 0;font-size:18px;color:#171717;outline:none"></label>
+        <label style="display:flex;flex-direction:column;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.13em;color:#6b6b6b">{{ t.fSubject }}
+          <select style="border:0;border-bottom:1px solid #bfb7a6;background:transparent;padding:10px 0;font-size:18px;color:#171717;outline:none">
+            <sc-for list="{{ areas }}" as="a" hint-placeholder-count="6"><option>{{ a.title }}</option></sc-for>
+            <option>{{ t.other }}</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.13em;color:#6b6b6b">{{ t.fMsg }}<textarea rows="4" style="border:0;border-bottom:1px solid #bfb7a6;background:transparent;padding:10px 0;font-size:18px;color:#171717;outline:none;resize:vertical"></textarea></label>
+        <label style="display:flex;gap:12px;align-items:flex-start;font-size:13px;line-height:1.6;color:#4a4a4a"><input type="checkbox" required="" style="margin-top:4px;accent-color:#B08A45">{{ t.kvkk }}</label>
+        <button type="submit" style="align-self:flex-start;display:flex;gap:14px;background:#171717;color:#F7F4ED;border:0;padding:20px 34px;font-size:12px;font-weight:600;letter-spacing:.16em;cursor:pointer;transition:background .4s" style-hover="background:#B08A45;color:#171717">{{ t.send }}</button>
+      </form>
+    </sc-if>
+    <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:8vh 0;border-top:1px solid #B08A45">
+        <div style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,4vw,64px);line-height:1">{{ t.thxA }} <em style="color:#6b5a3a">{{ t.thxB }}</em></div>
+        <p style="margin:24px 0 0;max-width:420px;font-size:16px;line-height:1.7;color:#4a4a4a">{{ t.thxP }}</p>
+      </div>
+    </sc-if>
+  </div>
+
+</section>
+</sc-if>
+
+<!-- ===================== GLOBAL: CTA + KONUM ===================== -->
+<sc-if value="{{ showCta }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="08 Çağrı" style="position:relative;display:grid;place-items:center;text-align:center;background:#F7F4ED;color:#171717;overflow:hidden;padding:18vh clamp(20px,5vw,80px);box-sizing:border-box">
+  <div style="position:relative">
+    <div data-reveal="fade" style="font-size:11px;font-weight:600;letter-spacing:0.2em;color:#8a6a2f">{{ t.nextStep }}</div>
+    <h2 data-reveal="up" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-weight:300;font-size:clamp(35px,4.48vw,80px);line-height:1.06;margin:32px 0 0;text-wrap:balance">{{ t.ctaA }}<br><em style="color:#6b5a3a">{{ t.ctaB }}</em> {{ t.ctaC }}</h2>
+    <a href="#/iletisim" data-reveal="up" data-delay="200" style="display:inline-flex;gap:14px;margin-top:56px;background:#171717;color:#F7F4ED;padding:20px 34px;font-size:12px;font-weight:600;letter-spacing:.16em;transition:background .4s,color .4s" style-hover="background:#B08A45;color:#171717">{{ t.cta }}</a>
+  </div>
+</section>
+
+</sc-if>
+</main>
+
+<footer data-screen-label="09 Footer" style="background:#171717;padding:10vh clamp(20px,5vw,80px) 40px;border-top:1px solid #262626">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:56px">
+    <img src="./assets/logo-light.png" alt="GK Avrasya Avukatlık Bürosu" style="width:clamp(200px,22vw,320px);height:auto;display:block;align-self:flex-start">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(40px,7vw,120px)">
+      <div style="display:flex;flex-direction:column;gap:14px;font-size:14px;color:#cdc8bd">
+        <span style="font-size:11px;letter-spacing:0.16em;color:#B08A45;margin-bottom:6px">{{ t.pages }}</span>
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5"><a href="{{ n.href }}">{{ n.title }}</a></sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;font-size:14px;color:#cdc8bd">
+        <span style="font-size:11px;letter-spacing:0.16em;color:#B08A45;margin-bottom:6px">{{ t.areasFooter }}</span>
+        <sc-for list="{{ areas }}" as="a" hint-placeholder-count="6"><a href="{{ a.href }}">{{ a.title }}</a></sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:8vh;padding-top:24px;border-top:1px solid #262626;font-size:12px;line-height:1.6;color:#8f8b84">
+    <span>{{ t.copy }}</span>
+    <span>{{ t.disclaimer }}</span>
+    <span>{{ t.kvkkLink }}</span>
+  </div>
+</footer>
+
+
+
+<div ref="{{ ovRef }}" aria-hidden="true" style="position:fixed;inset:0;z-index:100;pointer-events:none;visibility:hidden">
+  <div data-ov="rect" style="position:absolute;inset:0;background:#171717;opacity:0"></div>
+  <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+    <path data-ov="gold" pathLength="1" d="M-30 8 C 30 -14, 60 40, 130 16 C 70 42, 30 50, -30 62 C 40 72, 70 96, 130 94" fill="none" stroke="#B08A45" stroke-width="46" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+    <path data-ov="dark" pathLength="1" d="M-30 8 C 30 -14, 60 40, 130 16 C 70 42, 30 50, -30 62 C 40 72, 70 96, 130 94" fill="none" stroke="#171717" stroke-width="58" stroke-linecap="round" style="stroke-dasharray:1 1;stroke-dashoffset:1"></path>
+  </svg>
+  <div data-ov="label" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0">
+    <img src="./assets/mark-light.png" alt="" style="height:64px;width:auto">
+    <span data-ov="t" style="font-family:'Noto Serif','Noto Naskh Arabic',serif;font-style:italic;font-weight:300;font-size:clamp(35px,4.8vw,70px);color:#F7F4ED;line-height:1"></span>
+    <span data-ov="p" style="font-size:11px;letter-spacing:.14em;color:#B08A45"></span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;transition&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Altın kıvrım&quot;,&quot;Perde&quot;,&quot;Sade geçiş&quot;],&quot;default&quot;:&quot;Altın kıvrım&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hareket&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hareket&quot;}}">
+const AREAS = [
+  { slug:'ceza-hukuku', name:'CEZA HUKUKU', title:'Ceza Hukuku', cat:'Ceza', short:'Soruşturma ve kovuşturmanın her aşamasında savunma ve temsil.', lead:'Soruşturmanın ilk anından kesinleşmeye kadar, haklarınızı titizlikle savunuyoruz.', photo:'Fotoğraf — duruşma salonu', img:'courtChairs', scope:['Soruşturma aşamasında müdafilik','Ağır ceza ve asliye ceza davaları','Ekonomik ve bilişim suçları','Mağdur ve katılan vekilliği','İstinaf ve temyiz süreçleri'] },
+  { slug:'aile-hukuku', name:'AİLE HUKUKU', title:'Aile Hukuku', cat:'Aile', short:'Boşanma, velayet ve mal rejimi süreçlerinde özenli temsil.', lead:'Hassas aile süreçlerinde gizliliği ve çocukların üstün yararını önceleyen bir yaklaşım.', photo:'Fotoğraf — sakin iç mekân, doğal ışık', img:'hands', scope:['Anlaşmalı ve çekişmeli boşanma','Velayet ve kişisel ilişki','Nafaka davaları','Mal rejiminin tasfiyesi','6284 sayılı Kanun kapsamında koruma tedbirleri'] },
+  { slug:'ticaret-hukuku', name:'TİCARET HUKUKU', title:'Ticaret Hukuku', cat:'Ticaret', short:'Şirket kuruluşundan uyuşmazlık çözümüne ticari danışmanlık.', lead:'Şirketlerin günlük işleyişinden kritik kararlarına kadar yanlarında, öngörülü bir hukuk ortağı.', photo:'Fotoğraf — Levent iş merkezi, cam cephe', img:'glassInterior', scope:['Şirket kuruluşu ve esas sözleşme','Ticari sözleşmelerin hazırlanması','Ortaklık uyuşmazlıkları','Kıymetli evrak','Haksız rekabet'] },
+  { slug:'is-hukuku', name:'İŞ HUKUKU', title:'İş Hukuku', cat:'İş', short:'İşçi–işveren ilişkilerinde önleyici danışmanlık ve dava takibi.', lead:'İşçi ve işveren ilişkilerinde uyuşmazlığı önleyen, gerektiğinde etkin biçimde çözen danışmanlık.', photo:'Fotoğraf — ofis çalışma ortamı', img:'meeting', scope:['İşe iade davaları','Kıdem ve ihbar tazminatı','İş sözleşmelerinin hazırlanması','Arabuluculuk süreçleri','İş kazası tazminat davaları'] },
+  { slug:'gayrimenkul-hukuku', name:'GAYRİMENKUL HUKUKU', title:'Gayrimenkul Hukuku', cat:'Gayrimenkul', short:'Tapu, kira ve kat mülkiyeti uyuşmazlıklarında güvenli çözüm.', lead:'Mülkiyet haklarınızı; alım-satımdan kira ilişkisine, inşaat sözleşmelerinden tapu davalarına kadar koruyoruz.', photo:'Fotoğraf — tarihi İstanbul cepheleri', img:'brutalist', scope:['Tapu iptal ve tescil davaları','Kira tespit ve tahliye','Kat karşılığı inşaat sözleşmeleri','Ortaklığın giderilmesi','Kamulaştırma'] },
+  { slug:'icra-iflas-hukuku', name:'İCRA VE İFLAS HUKUKU', title:'İcra ve İflas Hukuku', cat:'İcra', short:'Alacak tahsilinden konkordatoya etkin ve hızlı takip.', lead:'Alacaklarınızın tahsilinde hızlı, borç yapılandırmasında dengeli ve sonuç odaklı takip.', photo:'Fotoğraf — dosya arşivi, detay', img:'ribbon', scope:['İlamlı ve ilamsız icra takipleri','İtirazın iptali davaları','Menfi tespit ve istirdat','İflas ve konkordato','Haciz ve muhafaza işlemleri'] },
+  { slug:'sirketler-ve-sozlesmeler', name:'ŞİRKETLER VE SÖZLEŞMELER', title:'Şirketler ve Sözleşmeler', cat:'Sözleşme', short:'Sözleşme hazırlığı, müzakere ve şirket içi düzenlemeler.', lead:'İmzadan önce riski görür, ilişkiyi sağlam bir hukuki zemine oturturuz.', photo:'Fotoğraf — sözleşme müzakeresi', img:'contract', scope:['Sözleşme taslağı ve incelemesi','Müzakere desteği','Pay devri ve ortaklık sözleşmeleri','Genel kurul ve yönetim kurulu işlemleri','Uyum ve iç düzenlemeler'] },
+  { slug:'yabancilar-ve-vatandaslik', name:'YABANCILAR VE VATANDAŞLIK', title:'Yabancılar ve Vatandaşlık', cat:'Yabancılar', short:'İkamet, çalışma izni ve vatandaşlık başvurularında rehberlik.', lead:'Türkiye’de yaşamak, çalışmak veya yatırım yapmak isteyenler için öngörülebilir bir süreç.', photo:'Fotoğraf — pasaport ve belgeler', img:'passport', scope:['İkamet izni başvuruları','Çalışma izni süreçleri','Yatırım yoluyla vatandaşlık','İdari kararlara itiraz','Yabancıların taşınmaz edinimi'] }
+];
+// Avukat bilgileri ve çalışma konumları — tek kaynak.
+// lat/lng: kesin koordinatlar biliniyorsa buraya girin; boş bırakılırsa adres Google Geocoding ile çözülür,
+// adres bulunamazsa o avukat için haritaya işaret konmaz (tahmini koordinat kullanılmaz).
+const LAWYERS = [
+  { slug:'hayrunnisa-gulcan', first:'Hayrunnisa', last:'Gülcan', ini:'HG', bar:'İstanbul 1 Nolu Barosu', sicil:'95116',
+    address:'Sümer Mah. 27/11 Sok. No:1/21', district:'Zeytinburnu', lat:null, lng:null,
+    bio:['İstanbul 1 Nolu Barosu’na kayıtlı avukat. GK Avrasya Avukatlık Bürosu’nda, büronun tüm çalışma alanlarında bireysel ve kurumsal müvekkillere danışmanlık ve dava takibi hizmeti vermektedir.','Dosyanın her aşamasında açık iletişimi ve müvekkilin süreç hakkında tam bilgi sahibi olmasını esas alır.'] },
+  { slug:'nada-karadirek', first:'Nada', last:'Karadirek', ini:'NK', bar:'İstanbul 2 Nolu Barosu', sicil:'4055',
+    address:'Hırka-i Şerif Mah. Eski Alpaca Cad. No:5/4', district:'Fatih', lat:null, lng:null,
+    bio:['İstanbul 2 Nolu Barosu’na kayıtlı avukat. GK Avrasya Avukatlık Bürosu’nda, büronun tüm çalışma alanlarında bireysel ve kurumsal müvekkillere danışmanlık ve dava takibi hizmeti vermektedir.','Uyuşmazlığı doğmadan önlemeyi hedefleyen, öngörülü ve pratik çözümler üretmeye odaklanır.'] }
+];
+const ARTICLES = [
+  { title:'Anlaşmalı boşanmada protokolün önemi', cat:'Aile', date:'12 Eylül 2026', read:'6 dk', excerpt:'Protokolde yer alan her hüküm, boşanma sonrası ilişkinin çerçevesini belirler.', img:'ribbon', src:'./assets/article-meeting.jpg' },
+  { title:'İşe iade davasında dikkat edilmesi gereken süreler', cat:'İş', date:'28 Ağustos 2026', read:'5 dk', excerpt:'Arabuluculuğa başvuru ve dava açma süreleri hak kaybını doğrudan etkiler.', img:'beck', src:'./assets/article-desk.jpg' },
+  { title:'Kira tespit davası: ne zaman, nasıl açılır?', cat:'Gayrimenkul', date:'9 Ağustos 2026', read:'7 dk', excerpt:'Beş yılı dolduran kira ilişkilerinde tespit davasının koşulları ve süreci.', img:'colBldg', src:'./assets/article-property.jpg' },
+  { title:'Ticari sözleşmelerde cezai şart', cat:'Ticaret', date:'21 Temmuz 2026', read:'6 dk', excerpt:'Cezai şartın kapsamı, sınırları ve hâkimin indirim yetkisi.', img:'contract' },
+  { title:'Soruşturma aşamasında müdafi hakkı', cat:'Ceza', date:'3 Temmuz 2026', read:'4 dk', excerpt:'İfade sırasında avukat bulundurma hakkı ve bu hakkın önemi.', img:'gavelMarble' },
+  { title:'İtirazın iptali ve icra inkâr tazminatı', cat:'İcra', date:'18 Haziran 2026', read:'5 dk', excerpt:'Takibe itiraz edilmesi hâlinde alacaklının başvurabileceği yollar.', img:'shelf' }
+];
+// Google Maps anahtarı: env.js içindeki VITE_GOOGLE_MAPS_API_KEY (Vite derlemesinde import.meta.env.VITE_GOOGLE_MAPS_API_KEY).
+const mapsKey = () => ((window.GK_ENV || {}).VITE_GOOGLE_MAPS_API_KEY || '').trim();
+let mapsPromise = null;
+const loadMaps = key => mapsPromise || (mapsPromise = new Promise((res, rej) => {
+  window.__gkMapsReady = () => res();
+  const sc = document.createElement('script');
+  sc.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(key) + '&language=tr&region=TR&v=weekly&callback=__gkMapsReady';
+  sc.async = true; sc.onerror = rej; document.head.appendChild(sc);
+}));
+const MAP_STYLE = [
+  { featureType:'poi', stylers:[{ visibility:'off' }] }, { featureType:'transit', stylers:[{ visibility:'simplified' }] },
+  { elementType:'geometry', stylers:[{ saturation:-60 }, { lightness:6 }] }, { featureType:'water', elementType:'geometry', stylers:[{ color:'#c9cfd1' }] },
+  { featureType:'road', elementType:'labels.icon', stylers:[{ visibility:'off' }] }
+];
+const focusFrom = r => { const [p, q] = r.split('?'); const k = new URLSearchParams(q || '').get('konum'); const parts = p.split('/').filter(Boolean); const f = parts[0] === 'iletisim' ? (k || parts[1]) : null; return f && LAWYERS.some(l => l.slug === f) ? f : null; };
+const NAV = [
+  { title:'Hakkımızda', label:'HAKKIMIZDA', href:'#/hakkimizda' },
+  { title:'Çalışma Alanlarımız', label:'ÇALIŞMA ALANLARIMIZ', href:'#/calisma-alanlarimiz' },
+  { title:'Avukatlarımız', label:'AVUKATLARIMIZ', href:'#/avukatlarimiz' },
+  { title:'Hukuki Bilgiler', label:'HUKUKİ BİLGİLER', href:'#/hukuki-bilgiler' },
+  { title:'İletişim', label:'İLETİŞİM', href:'#/iletisim' }
+];
+const PH = {"columns":"1603644448048-28a7e5122f0a","ladyJ":"1589829545856-d10d557cf95f","hands":"1714950630453-95997a24037a","beck":"1559897888-1740aa4d9f49","libChand":"1562529163-2cded489cc9a","colBldg":"1636652966850-5ac4d02370e9","libHall":"1531429745839-827a6a45e040","scale":"1687289133469-b2a07a13b78b","ladder":"1576414160011-98dfab3aa889","galataBirds":"1524231757912-21f4fe3a7200","meeting":"1571055931484-22dce9d6c510","courtChairs":"1607778914885-787b06728b07","glassTowers":"1784059211920-c1a246b5e025","brutalist":"1778800053717-9c0ad9b8751d","ribbon":"1600758083752-d1edc34dfbf3","contract":"1758518731462-d091b0b4ed0d","glassInterior":"1753241515120-d6e6a8db218a","shelf":"1619771699034-fec6b1aabde3","skylight":"1617496620840-78bed8fad303","passport":"1454496406107-dc34337da8d6","gavelMarble":"1589391886645-d51941baf7fb"};
+const IMGU = (k, w) => 'https://images.unsplash.com/photo-' + PH[k] + '?auto=format&fit=crop&w=' + (w || 1800) + '&q=72';
+const UP = s => s.toLocaleUpperCase('tr-TR');
+const KF = {
+  up: [{ opacity:'0', transform:'translateY(26px)' }, { opacity:'1', transform:'translateY(0px)' }],
+  line: [{ transform:'translateY(110%)' }, { transform:'translateY(0%)' }],
+  mask: [{ clipPath:'inset(100% 0% 0% 0%)', transform:'scale(1.05)', opacity:'0.35' }, { clipPath:'inset(0% 0% 0% 0%)', transform:'scale(1)', opacity:'1' }],
+  fade: [{ opacity:'0' }, { opacity:'1' }],
+  draw: [{ strokeDasharray:'1 1', strokeDashoffset:'1' }, { strokeDasharray:'1 1', strokeDashoffset:'0' }]
+};
+const DUR = { up:1600, line:1500, mask:2000, fade:1800, draw:3200 };
+const lawyerObj = l => ({ ...l, full:'Av. ' + l.first + ' ' + l.last, name:l.first + ' ' + l.last, href:'#/avukatlarimiz/' + l.slug, path:'/avukatlarimiz/' + l.slug,
+  baroLine: l.bar + ' · Sicil No ' + l.sicil, mapHref:'#/iletisim?konum=' + l.slug, districtUpper:UP(l.district) });
+// ===== Dil sistemi (TR kaynak dil) — çeviriler tek yerde =====
+const I18N = {"tr":{"nav":["Ana Sayfa","Hakkımızda","Çalışma Alanlarımız","Avukatlarımız","Hukuki Bilgiler","İletişim"],"cta":"BİZE ULAŞIN","menu":"MENÜ","close":"KAPAT","firmLine":"GK AVRASYA AVUKATLIK BÜROSU · İSTANBUL","heroEyebrow":"AVUKATLIK BÜROSU · İSTANBUL","heroL1":"HUKUKTA GÜVEN.","heroL2a":"ADALETTE","heroL2b":"kararlılık.","heroSub":"Profesyonel hukuki danışmanlık ve çözüm odaklı hukuk hizmetleri.","capEyebrow":"— AVRUPA İLE ASYA ARASINDA","capA":"Köklü bir şehirde,","capB":"çağdaş","capC":"bir hukuk anlayışı.","areasUpper":"ÇALIŞMA ALANLARIMIZ","approach":"— YAKLAŞIM","manA":"Hukuk yalnızca kurallardan","manB":"ibaret","manC":"değildir.","manP":"Her dosyanın arkasında bir insan, bir şirket, bir gelecek vardır. Kuralları bilmek başlangıçtır; onları doğru okumak fark yaratır.","aboutUpper":"HAKKIMIZDA","abA":"İki kıtanın buluştuğu şehirde, hukukun","abB":"güvenilir","abC":"adresi.","abP":"GK Avrasya Avukatlık Bürosu, İstanbul merkezli bir hukuk bürosudur. Bireysel ve kurumsal müvekkillerine dava takibi ve hukuki danışmanlık alanlarında özenli, şeffaf ve sonuca odaklı hizmet sunar.","abLink":"BÜROYU TANIYIN","areasH1":"Çalışma","areasH2":"alanlarımız","areasP":"Dava ve danışmanlık süreçlerinde, her alanda aynı titizlik.","istA":"Avrupa ile","istB":"Asya","istC":"arasında.","istP":"Adımızı şehrimizden alıyoruz. İki kıtayı birleştiren İstanbul gibi; geleneği ve yeniliği, titizliği ve çözümü bir araya getiriyoruz.","lawH1":"Avukat","lawH2":"larımız","av":"AV.","profile":"PROFİLİ İNCELE","insA":"Hukuki","insB":"bilgiler","allPosts":"TÜM YAZILAR →","homeUpper":"ANA SAYFA","aboutH1a":"Güven,","aboutH1b":"zamanla","aboutH1c":"inşa edilir.","aboutHeroP":"GK Avrasya Avukatlık Bürosu, bireysel ve kurumsal müvekkillerine İstanbul'dan özenli, şeffaf ve sonuca odaklı hukuki hizmet sunar.","buroA":"Büro","buroB":"muz","story1":"İstanbul'un köklü hukuk geleneğinden beslenen büromuz, her dosyayı müvekkilin özel koşulları ışığında ele alır. Dava sürecinin her aşamasında düzenli bilgilendirme ve açık iletişim esastır.","story2":"Ceza, aile, iş, ticaret, gayrimenkul, icra-iflas, şirketler ve sözleşmeler ile yabancılar ve vatandaşlık hukuku alanlarında; önleyici danışmanlıktan uyuşmazlık çözümüne kadar uzanan bir hizmet yelpazesi sunuyoruz.","principlesLabel":"— İLKELERİMİZ","areasHeroP":"Sekiz ana alanda dava takibi ve hukuki danışmanlık. Her alan için ayrıntılı kapsam aşağıda.","detail":"DETAY →","scope":"HİZMET KAPSAMI","proc1":"Süreç, dosyanın ayrıntılı incelenmesi ve hukuki durumun açıkça ortaya konmasıyla başlar. Olası yollar, riskler ve süreler müvekkilimizle birlikte değerlendirilir.","proc2":"Strateji belirlendikten sonra her aşama düzenli olarak raporlanır. Amacımız; hızlı, öngörülebilir ve müvekkilin menfaatine en uygun sonuca ulaşmaktır.","nextArea":"SONRAKİ ALAN —","lawyersUpper":"AVUKATLARIMIZ","teamA":"Özen ve","teamB":"kararlılık.","bar":"BARO","sicil":"SİCİL NO","workLoc":"ÇALIŞMA KONUMU","seeMap":"HARİTADA GÖR","appt":"RANDEVU TALEBİ","otherLawyer":"DİĞER AVUKATIMIZ","insUpper":"HUKUKİ BİLGİLER","insHeroP":"Güncel mevzuat ve uygulama üzerine kısa, anlaşılır notlar. Yazılar genel bilgilendirme amaçlıdır.","contactUpper":"İLETİŞİM","ctA":"Bir görüşme ile","ctB":"başlayalım.","ctH2":"Hukuki danışmanlık ve çözüm odaklı hizmet.","ctP":"Avukatlarımız iki ayrı çalışma konumunda hizmet vermektedir. Görüşme talebinizi aşağıdaki form aracılığıyla da iletebilirsiniz.","formH":"Size nasıl yardımcı olabiliriz?","fName":"AD SOYAD","fPhone":"TELEFON","fEmail":"E-POSTA","fSubject":"KONU","fMsg":"MESAJINIZ","other":"Diğer","kvkk":"KVKK Aydınlatma Metni'ni okudum, kişisel verilerimin başvurum kapsamında işlenmesini kabul ediyorum.","send":"GÖNDER","thxA":"Teşekkür","thxB":"ederiz.","thxP":"Mesajınız bize ulaştı. En kısa sürede sizinle iletişime geçeceğiz.","nextStep":"BİR SONRAKİ ADIM","ctaA":"Hukuki bir meseleniz mi var?","ctaB":"Birlikte","ctaC":"değerlendirelim.","pages":"SAYFALAR","areasFooter":"ÇALIŞMA ALANLARI","copy":"© 2026 GK Avrasya Avukatlık Bürosu","disclaimer":"Bu site, avukatlık meslek kuralları çerçevesinde yalnızca bilgilendirme amaçlıdır.","kvkkLink":"KVKK Aydınlatma Metni","arrow":"→","istanbul":"İstanbul","istUpper":"İSTANBUL","mapTitle":"çalışma konumu","avPrefix":"Av.","sicilShort":"Sicil No","chPhone":"TELEFON","chEmail":"E-POSTA","chWa":"WHATSAPP","ctaCall":"ARA →","ctaMail":"MAİL →","ctaWa":"WHATSAPP →","principles":[{"no":"01","title":"Gizlilik","text":"Müvekkilimizle kurduğumuz güven ilişkisi, her şeyden önce gelir."},{"no":"02","title":"Şeffaflık","text":"Süreci, olasılıkları ve maliyetleri baştan açıkça paylaşırız."},{"no":"03","title":"Kararlılık","text":"Dosyanın her aşamasını aynı titizlik ve sorumlulukla takip ederiz."}]},"en":{"nav":["Home","About","Practice Areas","Attorneys","Legal Insights","Contact"],"cta":"CONTACT US","menu":"MENU","close":"CLOSE","firmLine":"GK AVRASYA LAW FIRM · ISTANBUL","heroEyebrow":"LAW FIRM · ISTANBUL","heroL1":"TRUST IN LAW.","heroL2a":"RESOLVE IN","heroL2b":"justice.","heroSub":"Professional legal counsel and solution-oriented legal services.","capEyebrow":"— BETWEEN EUROPE AND ASIA","capA":"In a city of deep roots,","capB":"a contemporary","capC":"approach to law.","areasUpper":"PRACTICE AREAS","approach":"— OUR APPROACH","manA":"Law is more than","manB":"a set of","manC":"rules.","manP":"Behind every case is a person, a company, a future. Knowing the rules is only the beginning; reading them correctly is what makes the difference.","aboutUpper":"ABOUT US","abA":"In the city where two continents meet, a","abB":"trusted","abC":"address for law.","abP":"GK Avrasya Law Firm is an Istanbul-based law practice. It provides individual and corporate clients with careful, transparent and results-focused service in litigation and legal counsel.","abLink":"ABOUT THE FIRM","areasH1":"Practice","areasH2":"areas","areasP":"The same rigour in every field, in litigation and advisory work alike.","istA":"Between","istB":"Europe and","istC":"Asia.","istP":"We take our name from our city. Like Istanbul, which unites two continents, we bring together tradition and innovation, rigour and resolution.","lawH1":"Our ","lawH2":"attorneys","av":"ATTORNEY","profile":"VIEW PROFILE","insA":"Legal","insB":"insights","allPosts":"ALL ARTICLES →","homeUpper":"HOME","aboutH1a":"Trust","aboutH1b":"is built","aboutH1c":"over time.","aboutHeroP":"From Istanbul, GK Avrasya Law Firm provides individual and corporate clients with careful, transparent and results-focused legal services.","buroA":"The ","buroB":"firm","story1":"Drawing on Istanbul’s long legal tradition, our firm approaches every matter in light of the client’s particular circumstances. Regular updates and open communication are fundamental at every stage of a case.","story2":"We offer a range of services, from preventive counsel to dispute resolution, in criminal, family, employment, commercial, real estate, enforcement and insolvency, corporate and contract, and foreigners and citizenship law.","principlesLabel":"— OUR PRINCIPLES","areasHeroP":"Litigation and legal counsel across eight core practice areas. The scope of each area is set out below.","detail":"DETAILS →","scope":"SCOPE OF SERVICES","proc1":"The process begins with a detailed review of the file and a clear statement of the legal position. Possible courses of action, risks and timelines are assessed together with the client.","proc2":"Once the strategy is set, every stage is reported regularly. Our aim is a swift, predictable outcome that best serves the client’s interests.","nextArea":"NEXT AREA —","lawyersUpper":"ATTORNEYS","teamA":"Care and","teamB":"resolve.","bar":"BAR","sicil":"REGISTRATION NO.","workLoc":"PRACTICE LOCATION","seeMap":"VIEW ON MAP","appt":"REQUEST AN APPOINTMENT","otherLawyer":"OUR OTHER ATTORNEY","insUpper":"LEGAL INSIGHTS","insHeroP":"Brief, clear notes on current legislation and practice. Articles are provided for general information only.","contactUpper":"CONTACT","ctA":"Let us begin","ctB":"with a conversation.","ctH2":"Legal counsel and solution-oriented service.","ctP":"Our attorneys practise from two separate locations. You may also send your consultation request using the form below.","formH":"How can we help you?","fName":"FULL NAME","fPhone":"PHONE","fEmail":"EMAIL","fSubject":"SUBJECT","fMsg":"YOUR MESSAGE","other":"Other","kvkk":"I have read the Personal Data Protection (KVKK) Notice and consent to the processing of my personal data for the purposes of my enquiry.","send":"SEND","thxA":"Thank","thxB":"you.","thxP":"Your message has been received. We will be in touch shortly.","nextStep":"THE NEXT STEP","ctaA":"Facing a legal matter?","ctaB":"Let us assess it","ctaC":"together.","pages":"PAGES","areasFooter":"PRACTICE AREAS","copy":"© 2026 GK Avrasya Law Firm","disclaimer":"This website is provided for information purposes only, in accordance with the professional rules governing attorneys.","kvkkLink":"Personal Data Notice (KVKK)","arrow":"→","istanbul":"Istanbul","istUpper":"ISTANBUL","mapTitle":"practice location","avPrefix":"Av.","sicilShort":"Reg. No.","chPhone":"PHONE","chEmail":"EMAIL","chWa":"WHATSAPP","ctaCall":"CALL →","ctaMail":"EMAIL →","ctaWa":"WHATSAPP →","principles":[{"no":"01","title":"Confidentiality","text":"The relationship of trust we build with our clients comes before everything else."},{"no":"02","title":"Transparency","text":"We share the process, the possibilities and the costs openly from the outset."},{"no":"03","title":"Resolve","text":"We follow every stage of a matter with the same rigour and responsibility."}]},"ar":{"nav":["الرئيسية","من نحن","مجالات العمل","محامونا","معلومات قانونية","اتصل بنا"],"cta":"تواصل معنا","menu":"القائمة","close":"إغلاق","firmLine":"مكتب GK Avrasya للمحاماة · إسطنبول","heroEyebrow":"مكتب محاماة · إسطنبول","heroL1":"الثقة في القانون.","heroL2a":"والحزم في","heroL2b":"العدالة.","heroSub":"استشارات قانونية احترافية وخدمات قانونية تركّز على الحلول.","capEyebrow":"— بين أوروبا وآسيا","capA":"في مدينة عريقة، رؤية قانونية","capB":"معاصرة.","capC":"","areasUpper":"مجالات العمل","approach":"— نهجنا","manA":"القانون ليس مجرّد","manB":"مجموعة","manC":"من القواعد.","manP":"خلف كل ملف إنسان أو شركة أو مستقبل. معرفة القواعد بداية الطريق؛ أما قراءتها قراءةً صحيحة فهي ما يصنع الفرق.","aboutUpper":"من نحن","abA":"في المدينة التي تلتقي فيها قارتان، عنوان","abB":"موثوق","abC":"للقانون.","abP":"مكتب GK Avrasya للمحاماة مكتب قانوني مقرّه إسطنبول، يقدّم لعملائه من الأفراد والشركات خدمات متابعة الدعاوى والاستشارات القانونية بعناية وشفافية وتركيز على النتائج.","abLink":"تعرّفوا على المكتب","areasH1":"مجالات","areasH2":"العمل","areasP":"الدقة ذاتها في كل مجال، في التقاضي والاستشارات على حدّ سواء.","istA":"بين","istB":"أوروبا","istC":"وآسيا.","istP":"نستمدّ اسمنا من مدينتنا. وكما تجمع إسطنبول بين قارتين، نجمع بين الأصالة والتجديد، وبين الدقة والحل.","lawH1":"محامونا","lawH2":"","av":"المحامية","profile":"عرض الملف","insA":"معلومات","insB":"قانونية","allPosts":"جميع المقالات ←","homeUpper":"الرئيسية","aboutH1a":"الثقة","aboutH1b":"تُبنى","aboutH1c":"مع الزمن.","aboutHeroP":"يقدّم مكتب GK Avrasya للمحاماة من إسطنبول خدمات قانونية دقيقة وشفافة تركّز على النتائج لعملائه من الأفراد والشركات.","buroA":"مكتبنا","buroB":"","story1":"يستلهم مكتبنا تقاليد إسطنبول القانونية العريقة، ويتناول كل ملف في ضوء الظروف الخاصة بالموكّل. ويقوم عملنا في كل مرحلة من مراحل الدعوى على الإطلاع المنتظم والتواصل الواضح.","story2":"نقدّم طيفاً من الخدمات يمتد من الاستشارات الوقائية إلى تسوية النزاعات في مجالات القانون الجنائي، والأسرة، والعمل، والتجارة، والعقارات، والتنفيذ والإفلاس، والشركات والعقود، والأجانب والجنسية.","principlesLabel":"— مبادئنا","areasHeroP":"متابعة الدعاوى والاستشارات القانونية في ثمانية مجالات رئيسية، مع تفصيل نطاق كل مجال أدناه.","detail":"التفاصيل ←","scope":"نطاق الخدمات","proc1":"تبدأ العملية بدراسة الملف دراسة مفصّلة وتوضيح الموقف القانوني بجلاء، ثم تُقيَّم الخيارات الممكنة والمخاطر والمدد بالتشاور مع الموكّل.","proc2":"وبعد تحديد الاستراتيجية، تُرفع تقارير منتظمة عن كل مرحلة. هدفنا الوصول إلى نتيجة سريعة ومتوقعة تخدم مصلحة الموكّل على أفضل وجه.","nextArea":"المجال التالي —","lawyersUpper":"محامونا","teamA":"العناية","teamB":"والحزم.","bar":"النقابة","sicil":"رقم القيد","workLoc":"موقع العمل","seeMap":"عرض على الخريطة","appt":"طلب موعد","otherLawyer":"محاميتنا الأخرى","insUpper":"معلومات قانونية","insHeroP":"ملاحظات موجزة وواضحة حول التشريعات والممارسة الحالية. المقالات لأغراض المعلومات العامة فقط.","contactUpper":"التواصل","ctA":"لنبدأ","ctB":"بلقاء.","ctH2":"استشارات قانونية وخدمة تركّز على الحلول.","ctP":"يعمل محامونا من موقعين منفصلين. ويمكنكم أيضاً إرسال طلب الاستشارة عبر النموذج أدناه.","formH":"كيف يمكننا مساعدتكم؟","fName":"الاسم الكامل","fPhone":"الهاتف","fEmail":"البريد الإلكتروني","fSubject":"الموضوع","fMsg":"رسالتكم","other":"أخرى","kvkk":"اطّلعت على إشعار حماية البيانات الشخصية (KVKK) وأوافق على معالجة بياناتي الشخصية في إطار طلبي.","send":"إرسال","thxA":"شكراً","thxB":"لكم.","thxP":"وصلتنا رسالتكم، وسنتواصل معكم في أقرب وقت.","nextStep":"الخطوة التالية","ctaA":"هل لديكم مسألة قانونية؟","ctaB":"لنقيّمها","ctaC":"معاً.","pages":"الصفحات","areasFooter":"مجالات العمل","copy":"© 2026 مكتب GK Avrasya للمحاماة","disclaimer":"هذا الموقع لأغراض إعلامية فقط، وفقاً لقواعد مهنة المحاماة.","kvkkLink":"إشعار حماية البيانات الشخصية","arrow":"←","istanbul":"إسطنبول","istUpper":"إسطنبول","mapTitle":"موقع العمل","avPrefix":"المحامية","sicilShort":"رقم القيد","chPhone":"الهاتف","chEmail":"البريد الإلكتروني","chWa":"واتساب","ctaCall":"اتصال ←","ctaMail":"البريد الإلكتروني ←","ctaWa":"واتساب ←","principles":[{"no":"01","title":"السرية","text":"علاقة الثقة التي نبنيها مع موكّلينا تأتي قبل كل شيء."},{"no":"02","title":"الشفافية","text":"نطلعكم بوضوح منذ البداية على الإجراءات والاحتمالات والتكاليف."},{"no":"03","title":"الحزم","text":"نتابع كل مرحلة من مراحل القضية بالدقة والمسؤولية ذاتها."}]}};
+const AREA_T = {"en":[{"title":"Criminal Law","cat":"Criminal","short":"Defence and representation at every stage of investigation and prosecution.","lead":"From the first moment of an investigation until the judgment becomes final, we defend your rights with rigour.","scope":["Defence counsel during investigation","Proceedings before high and general criminal courts","Economic and cyber crimes","Representation of victims and intervening parties","Appeals and Court of Cassation proceedings"]},{"title":"Family Law","cat":"Family","short":"Careful representation in divorce, custody and matrimonial property matters.","lead":"An approach to sensitive family matters that puts confidentiality and the best interests of the child first.","scope":["Uncontested and contested divorce","Custody and personal contact","Maintenance claims","Liquidation of matrimonial property","Protective orders under Law No. 6284"]},{"title":"Commercial Law","cat":"Commercial","short":"Commercial counsel from incorporation to dispute resolution.","lead":"A forward-looking legal partner for companies, from day-to-day operations to critical decisions.","scope":["Incorporation and articles of association","Drafting commercial contracts","Shareholder disputes","Negotiable instruments","Unfair competition"]},{"title":"Employment Law","cat":"Employment","short":"Preventive counsel and litigation in employer–employee relations.","lead":"Advice that prevents disputes between employers and employees, and resolves them effectively when they arise.","scope":["Reinstatement claims","Severance and notice pay","Drafting employment contracts","Mandatory mediation","Workplace accident compensation"]},{"title":"Real Estate Law","cat":"Real Estate","short":"Secure solutions in title deed, lease and condominium disputes.","lead":"We protect your property rights, from sale and purchase to leases, construction agreements and title litigation.","scope":["Title deed cancellation and registration","Rent determination and eviction","Flat-for-land construction agreements","Partition of co-owned property","Expropriation"]},{"title":"Enforcement and Insolvency Law","cat":"Enforcement","short":"Efficient, timely action from debt recovery to concordat.","lead":"Swift action in recovering receivables; balanced, results-focused solutions in debt restructuring.","scope":["Enforcement with and without judgment","Actions for annulment of objection","Negative declaratory and restitution actions","Bankruptcy and concordat","Attachment and seizure"]},{"title":"Corporate and Contracts","cat":"Contracts","short":"Contract drafting, negotiation and internal corporate governance.","lead":"We identify risk before signature and place the relationship on sound legal footing.","scope":["Contract drafting and review","Negotiation support","Share transfers and shareholders’ agreements","General assembly and board procedures","Compliance and internal regulations"]},{"title":"Foreigners and Citizenship","cat":"Foreigners","short":"Guidance on residence permits, work permits and citizenship applications.","lead":"A predictable process for those who wish to live, work or invest in Türkiye.","scope":["Residence permit applications","Work permit procedures","Citizenship by investment","Challenges to administrative decisions","Property acquisition by foreign nationals"]}],"ar":[{"title":"القانون الجنائي","cat":"جنائي","short":"الدفاع والتمثيل في جميع مراحل التحقيق والملاحقة القضائية.","lead":"من اللحظة الأولى للتحقيق حتى صدور الحكم النهائي، ندافع عن حقوقكم بكل دقة.","scope":["الدفاع في مرحلة التحقيق","الدعاوى أمام محاكم الجنايات","الجرائم الاقتصادية والمعلوماتية","تمثيل المجني عليهم والمتدخلين","الاستئناف والطعن بالنقض"]},{"title":"قانون الأسرة","cat":"أسرة","short":"تمثيل دقيق في قضايا الطلاق والحضانة ونظام الأموال الزوجية.","lead":"نهج يقدّم السرية ومصلحة الطفل الفضلى في قضايا الأسرة الحساسة.","scope":["الطلاق بالتراضي والطلاق المتنازع عليه","الحضانة وحق الرؤية","دعاوى النفقة","تصفية نظام الأموال الزوجية","تدابير الحماية وفق القانون رقم 6284"]},{"title":"القانون التجاري","cat":"تجاري","short":"استشارات تجارية من تأسيس الشركات حتى تسوية النزاعات.","lead":"شريك قانوني بعيد النظر يرافق الشركات من أعمالها اليومية حتى قراراتها المصيرية.","scope":["تأسيس الشركات وعقود التأسيس","صياغة العقود التجارية","نزاعات الشركاء","الأوراق التجارية","المنافسة غير المشروعة"]},{"title":"قانون العمل","cat":"عمل","short":"استشارات وقائية ومتابعة الدعاوى في علاقات العمل.","lead":"استشارات تمنع النزاع بين العامل وصاحب العمل، وتحسمه بفعالية عند نشوئه.","scope":["دعاوى الإعادة إلى العمل","تعويض نهاية الخدمة والإخطار","صياغة عقود العمل","إجراءات الوساطة","تعويضات حوادث العمل"]},{"title":"القانون العقاري","cat":"عقارات","short":"حلول آمنة في نزاعات سندات الملكية والإيجار والملكية المشتركة.","lead":"نحمي حقوق ملكيتكم، من البيع والشراء إلى الإيجار وعقود البناء ودعاوى السجل العقاري.","scope":["دعاوى إلغاء وتسجيل سندات الملكية","تحديد الأجرة والإخلاء","عقود البناء مقابل حصص","إزالة الشيوع","الاستملاك"]},{"title":"قانون التنفيذ والإفلاس","cat":"تنفيذ","short":"متابعة فعّالة وسريعة من تحصيل الديون حتى التسوية الوقائية.","lead":"متابعة سريعة في تحصيل المستحقات، ومتوازنة في إعادة هيكلة الديون.","scope":["التنفيذ بحكم وبدون حكم","دعاوى إلغاء الاعتراض","دعاوى عدم المديونية والاسترداد","الإفلاس والتسوية الوقائية","الحجز والتحفّظ"]},{"title":"الشركات والعقود","cat":"عقود","short":"صياغة العقود والتفاوض والتنظيم الداخلي للشركات.","lead":"نرصد المخاطر قبل التوقيع، ونرسي العلاقة على أساس قانوني متين.","scope":["صياغة العقود ومراجعتها","الدعم في المفاوضات","نقل الحصص واتفاقيات الشركاء","إجراءات الجمعية العامة ومجلس الإدارة","الامتثال واللوائح الداخلية"]},{"title":"الأجانب والجنسية","cat":"أجانب","short":"إرشاد في طلبات الإقامة وتصاريح العمل والجنسية.","lead":"إجراءات واضحة ومتوقعة لمن يرغب في العيش أو العمل أو الاستثمار في تركيا.","scope":["طلبات الإقامة","إجراءات تصاريح العمل","الجنسية عن طريق الاستثمار","الطعن في القرارات الإدارية","تملّك الأجانب للعقارات"]}]};
+const ART_T = {"en":[{"title":"The importance of the protocol in uncontested divorce","cat":"Family","date":"12 September 2026","read":"6 min","excerpt":"Every clause of the protocol shapes the relationship after the divorce."},{"title":"Time limits to observe in reinstatement claims","cat":"Employment","date":"28 August 2026","read":"5 min","excerpt":"Deadlines for mediation and for filing suit directly affect whether rights are preserved."},{"title":"Rent determination actions: when and how to file","cat":"Real Estate","date":"9 August 2026","read":"7 min","excerpt":"Conditions and procedure for rent determination in leases exceeding five years."},{"title":"Penalty clauses in commercial contracts","cat":"Commercial","date":"21 July 2026","read":"6 min","excerpt":"The scope and limits of penalty clauses, and the judge’s power to reduce them."},{"title":"The right to counsel during investigation","cat":"Criminal","date":"3 July 2026","read":"4 min","excerpt":"The right to have a lawyer present during questioning, and why it matters."},{"title":"Annulment of objection and compensation for denial","cat":"Enforcement","date":"18 June 2026","read":"5 min","excerpt":"Remedies available to the creditor when the debtor objects to enforcement."}],"ar":[{"title":"أهمية البروتوكول في الطلاق بالتراضي","cat":"أسرة","date":"12 سبتمبر 2026","read":"6 دقائق","excerpt":"كل بند في البروتوكول يحدد إطار العلاقة بعد الطلاق."},{"title":"المهل الواجب مراعاتها في دعوى الإعادة إلى العمل","cat":"عمل","date":"28 أغسطس 2026","read":"5 دقائق","excerpt":"مهل اللجوء إلى الوساطة ورفع الدعوى تؤثر مباشرة في الحفاظ على الحقوق."},{"title":"دعوى تحديد الأجرة: متى وكيف تُرفع؟","cat":"عقارات","date":"9 أغسطس 2026","read":"7 دقائق","excerpt":"شروط دعوى تحديد الأجرة وإجراءاتها في عقود الإيجار التي تجاوزت خمس سنوات."},{"title":"الشرط الجزائي في العقود التجارية","cat":"تجاري","date":"21 يوليو 2026","read":"6 دقائق","excerpt":"نطاق الشرط الجزائي وحدوده وسلطة القاضي في تخفيضه."},{"title":"حق الاستعانة بمحامٍ في مرحلة التحقيق","cat":"جنائي","date":"3 يوليو 2026","read":"4 دقائق","excerpt":"حق حضور المحامي أثناء الإدلاء بالإفادة وأهمية هذا الحق."},{"title":"إلغاء الاعتراض وتعويض الإنكار","cat":"تنفيذ","date":"18 يونيو 2026","read":"5 دقائق","excerpt":"السبل المتاحة للدائن عند اعتراض المدين على إجراءات التنفيذ."}]};
+const LAW_T = {"en":{"hayrunnisa-gulcan":{"bar":"Istanbul Bar Association No. 1","bio":["Attorney registered with the Istanbul Bar Association No. 1. At GK Avrasya Law Firm, she advises and represents individual and corporate clients across all of the firm’s practice areas.","She places clear communication, and keeping clients fully informed at every stage, at the centre of her work."]},"nada-karadirek":{"bar":"Istanbul Bar Association No. 2","bio":["Attorney registered with the Istanbul Bar Association No. 2. At GK Avrasya Law Firm, she advises and represents individual and corporate clients across all of the firm’s practice areas.","She focuses on anticipating disputes before they arise and on delivering practical, forward-looking solutions."]}},"ar":{"hayrunnisa-gulcan":{"first":"خير النساء","last":"غولجان","district":"زيتون بورنو","bar":"نقابة المحامين في إسطنبول رقم 1","bio":["محامية مسجّلة لدى نقابة المحامين في إسطنبول رقم 1. تقدّم في مكتب GK Avrasya للمحاماة الاستشارات القانونية ومتابعة الدعاوى للعملاء من الأفراد والشركات في جميع مجالات عمل المكتب.","تعتمد التواصل الواضح وإطلاع الموكّل الكامل على مجريات القضية في كل مرحلة."]},"nada-karadirek":{"first":"ندى","last":"قره ديرك","district":"الفاتح","bar":"نقابة المحامين في إسطنبول رقم 2","bio":["محامية مسجّلة لدى نقابة المحامين في إسطنبول رقم 2. تقدّم في مكتب GK Avrasya للمحاماة الاستشارات القانونية ومتابعة الدعاوى للعملاء من الأفراد والشركات في جميع مجالات عمل المكتب.","تركّز على الوقاية من النزاع قبل نشوئه وتقديم حلول عملية بعيدة النظر."]}}};
+// İletişim kanalları — yalnızca doldurulan alanlar sitede görünür. Uydurma bilgi girmeyin.
+const CONTACT = { phone:'', email:'', whatsapp:'' };
+const LANGS = [{ id:'tr', code:'TR', name:'Türkçe' }, { id:'en', code:'EN', name:'English' }, { id:'ar', code:'AR', name:'العربية' }];
+const UPL = (s, lg) => lg === 'ar' ? s : s.toLocaleUpperCase(lg === 'tr' ? 'tr-TR' : 'en-US');
+const NAV_HREF = ['#/','#/hakkimizda','#/calisma-alanlarimiz','#/avukatlarimiz','#/hukuki-bilgiler','#/iletisim'];
+const navFor = lg => I18N[lg].nav.map((title, i) => ({ title, label:UPL(title, lg), href:NAV_HREF[i] }));
+const lawyerL = (l0, lg) => { const t = I18N[lg], l = lg === 'tr' ? l0 : { ...l0, ...LAW_T[lg][l0.slug] }, name = l.first + ' ' + l.last;
+  return { ...l, name, full:t.avPrefix + ' ' + name, href:'#/avukatlarimiz/' + l.slug, baroLine:l.bar + ' · ' + t.sicilShort + ' ' + l.sicil,
+    mapHref:'#/iletisim?konum=' + l.slug, districtCity:l.district + ' / ' + t.istanbul, districtUpper:UPL(l.district, lg) + ' / ' + t.istUpper }; };
+const initLang = () => { try { const v = localStorage.getItem('gk-lang'); return I18N[v] ? v : 'tr'; } catch (e) { return 'tr'; } };
+function labelFor(p, lg) {
+  lg = I18N[lg] ? lg : 'tr';
+  p = p.split('?')[0];
+  const parts = p.split('/').filter(Boolean);
+  if (!parts.length) return 'GK Avrasya';
+  if (parts[0] === 'calisma-alanlarimiz' && parts[1]) { const i = AREAS.findIndex(x => x.slug === parts[1]); if (i >= 0) return lg === 'tr' ? AREAS[i].title : AREA_T[lg][i].title; }
+  if (parts[0] === 'avukatlarimiz' && parts[1]) { const l = LAWYERS.find(x => x.slug === parts[1]); if (l) return lawyerL(l, lg).full; }
+  const n = navFor(lg).find(x => x.href === '#/' + parts[0]); return n ? n.title : 'GK Avrasya';
+}
+const readRoute = () => { const h = (location.hash || '').replace(/^#/, ''); return h.startsWith('/') ? h : '/'; };
+
+class Component extends DCLogic {
+  state = { lang:initLang(), route:'/', narrow:false, menu:false, filter:'Tümü', sent:false, active:null, geo:{} };
+  locRefs = Object.fromEntries(LAWYERS.map(l => [l.slug, { map:React.createRef(), wrap:React.createRef() }])); gMaps = {};
+  hr = Object.fromEntries(['wrap','clip','imgA','imgB','shade','frame','h1','l1','l2','sub','cap','line','hint','prog','ivory'].map(k => [k, React.createRef()])); ovRef = React.createRef(); pvRef = React.createRef(); navBgRef = React.createRef();
+
+  componentDidMount() {
+    this.rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.applyLang();
+    const r = readRoute(); if (r !== '/') this.setState({ route:r });
+    this.onResize = () => { const n = window.innerWidth < 1180; if (n !== this.state.narrow) this.setState({ narrow:n }); this.queue(); };
+    this.onScroll = () => { if (this.navBgRef.current) this.navBgRef.current.style.opacity = window.scrollY > 40 ? '1' : '0'; this.queue(); };
+    this.onClick = e => { const a = e.target.closest && e.target.closest('a[href^="#/"]'); if (!a) return; e.preventDefault(); this.navigate(a.getAttribute('href').slice(1)); };
+    this.onPop = () => { const r = readRoute(); if (r !== this.state.route) this.navigate(r, true); };
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    window.addEventListener('popstate', this.onPop);
+    window.addEventListener('hashchange', this.onPop);
+    document.addEventListener('click', this.onClick);
+    this.onResize();
+    setTimeout(() => { this.refresh(); this.syncMap(); }, 60);
+    const ph = () => { this._hp = null; this.placeHeroText(); this.queue(); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ph);
+    setTimeout(ph, 400); setTimeout(ph, 2000);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize); window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('popstate', this.onPop); window.removeEventListener('hashchange', this.onPop);
+    document.removeEventListener('click', this.onClick); if (this.io) this.io.disconnect();
+  }
+  componentDidUpdate(pp, ps) {
+    this.syncMap();
+    if (ps.route !== this.state.route) this.resetAll = true;
+    if (ps.lang !== this.state.lang) { this.applyLang(); requestAnimationFrame(() => { this._hp = null; this.placeHeroText(); this.queue(); }); }
+    if (ps.route !== this.state.route || ps.filter !== this.state.filter || ps.narrow !== this.state.narrow || pp.parallax !== this.props.parallax)
+      requestAnimationFrame(() => this.refresh());
+  }
+
+  applyLang(id) {
+    const lg = id || this.state.lang, d = document.documentElement;
+    if (d.lang === lg && d.dir === (lg === 'ar' ? 'rtl' : 'ltr')) return;
+    d.lang = lg; d.dir = lg === 'ar' ? 'rtl' : 'ltr'; d.style.setProperty('--gk-g', lg === 'ar' ? '270deg' : '90deg');
+  }
+  setLang(id) { try { localStorage.setItem('gk-lang', id); } catch (e) {} this.applyLang(id); this.setState({ lang:id, menu:false }); }
+  refresh() {
+    const all = [...document.querySelectorAll('[data-reveal]')];
+    if (this.rm) { this.par = []; this.imgs = []; return; }
+    if (!this.io) this.io = new IntersectionObserver(es => es.forEach(en => {
+      if (!en.isIntersecting) return; this.io.unobserve(en.target);
+      (en.target._rv || [en.target]).forEach(el => this.play(el)); en.target._rv = null;
+    }), { threshold:0.1, rootMargin:'0px 0px -5% 0px' });
+    all.forEach(el => {
+      if (el.dataset.rv && !this.resetAll) return;
+      el.dataset.rv = '1'; el.getAnimations().forEach(a => a.cancel());
+      const t = el.dataset.reveal;
+      Object.assign(el.style, (KF[t] || KF.up)[0]);
+      const target = (t === 'line' || t === 'mask') && el.parentElement ? el.parentElement : el;
+      if (target !== el) { (target._rv = target._rv || []).push(el); }
+      this.io.observe(target);
+    });
+    this.resetAll = false; this._hp = null;
+    const on = this.props.parallax ?? true;
+    this.par = on ? [...document.querySelectorAll('[data-speed]')] : [];
+    this.imgs = on ? [...document.querySelectorAll('img[data-par]')] : [];
+    if (!on) document.querySelectorAll('[data-speed],img[data-par]').forEach(e => { e.style.transform = ''; e._ty = 0; });
+    this.queue();
+  }
+  play(el) {
+    const t = el.dataset.reveal, k = KF[t] || KF.up;
+    Object.assign(el.style, k[1]);
+    el.animate([k[0], k[1]], { duration:DUR[t] || 1200, delay:+(el.dataset.delay || 0), easing:'cubic-bezier(.22,.61,.12,1)', fill:'backwards' });
+  }
+  queue() {
+    if (this.raf) return;
+    this.raf = requestAnimationFrame(() => {
+      this.raf = 0; this.drawHero(); const h = window.innerHeight;
+      for (const el of this.par || []) {
+        const r = el.getBoundingClientRect(), top = r.top - (el._ty || 0);
+        if (top > h + 300 || top + r.height < -300) continue;
+        const ty = -(top + r.height / 2 - h / 2) * (+el.dataset.speed || 0);
+        el._ty = ty; el.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0)';
+      }
+      for (const im of this.imgs || []) {
+        const r = im.parentElement.getBoundingClientRect();
+        if (r.top > h + 100 || r.bottom < -100) continue;
+        const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - h / 2) / (h / 2 + r.height / 2)));
+        const sc = 1 + 0.05 * Math.max(0, p);
+        im.style.transform = 'translate3d(0,' + (-p * 8).toFixed(2) + '%,0) scale(' + sc.toFixed(4) + ')';
+      }
+    });
+  }
+
+  syncMap() {
+    const key = mapsKey(), f = focusFrom(this.state.route);
+    if (f && f !== this._focus) { this._focus = f; setTimeout(() => { const w = this.locRefs[f].wrap.current; if (w) window.scrollTo({ top:Math.max(0, w.getBoundingClientRect().top + window.scrollY - 110), behavior:this.rm ? 'auto' : 'smooth' }); this.openInfo(f); }, 450); }
+    if (!f) this._focus = null;
+    if (!key) return;
+    LAWYERS.forEach(l => {
+      const el = this.locRefs[l.slug].map.current, g = this.gMaps[l.slug];
+      if (g && g.el !== el) delete this.gMaps[l.slug];
+      if (!el || this.gMaps[l.slug]) return;
+      if (!(window.google && google.maps && google.maps.Map)) { loadMaps(key).then(() => this.syncMap()); return; }
+      this.initMap(l, el);
+    });
+  }
+  initMap(l, el) {
+    const map = new google.maps.Map(el, { center:{ lat:41.015, lng:28.94 }, zoom:12, mapTypeControl:false, streetViewControl:false, fullscreenControl:false, zoomControl:true, gestureHandling:'cooperative', styles:MAP_STYLE });
+    const rec = this.gMaps[l.slug] = { el, map, info:new google.maps.InfoWindow(), marker:null };
+    const place = pos => {
+      if (this.gMaps[l.slug] !== rec) return;
+      rec.marker = new google.maps.Marker({ map, position:pos, title:'Av. ' + l.first + ' ' + l.last,
+        icon:{ path:'M 0,-9 9,0 0,9 -9,0 z', fillColor:'#B08A45', fillOpacity:1, strokeColor:'#171717', strokeWeight:1.5, scale:1.2 } });
+      rec.marker.addListener('click', () => this.openInfo(l.slug));
+      map.setCenter(pos); map.setZoom(16);
+      if (this._focus === l.slug) this.openInfo(l.slug);
+    };
+    if (l.lat != null && l.lng != null) return place({ lat:l.lat, lng:l.lng });
+    new google.maps.Geocoder().geocode({ address:l.address + ', ' + l.district + ', İstanbul, Türkiye', region:'tr' }, (res, st) => {
+      if (st === 'OK' && res && res[0]) place(res[0].geometry.location.toJSON());
+      else console.warn('GK map: adres bulunamadı —', l.address, st);
+    });
+  }
+  openInfo(slug) {
+    const rec = this.gMaps[slug], l0 = LAWYERS.find(x => x.slug === slug);
+    if (!rec || !rec.marker || !l0) return;
+    const lg = this.state.lang, l = lawyerL(l0, lg), dir = lg === 'ar' ? 'rtl' : 'ltr';
+    rec.info.setContent('<div dir="' + dir + '" style="font-family:\'Noto Sans\',\'Noto Sans Arabic\',sans-serif;color:#171717;padding:4px 6px 2px;max-width:260px"><div style="font-family:\'Noto Serif\',\'Noto Naskh Arabic\',serif;font-size:22px;line-height:1.1">' + l.full + '</div><div style="margin-top:6px;font-size:10px;font-weight:600;letter-spacing:0.13em;color:#8a6a2f">' + l.districtUpper + '</div><div style="margin-top:8px;font-size:13px;line-height:1.55;color:#4a4a4a">' + l.address + '</div></div>');
+    rec.info.open({ map:rec.map, anchor:rec.marker });
+    rec.map.panTo(rec.marker.getPosition());
+  }
+  placeHeroText() {
+    const h1 = this.hr.h1.current; if (!h1) return;
+    const vh = innerHeight, mob = innerWidth < 760;
+    h1.style.width = mob ? 'calc(100vw - 40px)' : '43vw';
+    if (mob) { h1.style.top = '88px'; h1.style.bottom = 'auto'; return; }
+    const bo = Math.min(96, Math.max(40, .09 * vh)), room = vh - bo - 104, hgt = h1.scrollHeight;
+    if (hgt > room) { h1.style.top = '104px'; h1.style.bottom = 'auto'; } else { h1.style.top = 'auto'; h1.style.bottom = bo + 'px'; }
+  }
+  drawHero() {
+    const R = k => this.hr[k].current, w = R('wrap'); if (!w || !R('clip')) return;
+    const vh = innerHeight, vw = innerWidth, mob = vw < 760, still = this.rm || (this.props.parallax ?? true) === false;
+    const want = still ? '100vh' : (mob ? 280 : 400) + 'vh';
+    if (w.style.height !== want) w.style.height = want;
+    const total = Math.max(1, w.offsetHeight - vh);
+    const p = still ? 0 : Math.min(1, Math.max(0, -w.getBoundingClientRect().top / total));
+    this.placeHeroText();
+    if (this._hp === p && this._hw === vw) return; this._hp = p; this._hw = vw;
+    const cl = (a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+    const io = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const fadeUI = io(cl(.04, .2)), open = io(cl(.12, .5)), lift = io(cl(.28, .48)),
+      swap = io(cl(.5, .7)), pan = cl(.5, .85), capIn = io(cl(.56, .7)), lineT = io(cl(.6, .82)), out = io(cl(.84, 1));
+    const h1 = R('h1');
+    const mTop = mob ? Math.min(vh - 180, 88 + h1.offsetHeight + 28) : 0;
+    const s0 = mob ? [mTop, 20, .04 * vh, 20] : [.09 * vh, 0, .11 * vh, .5 * vw];
+    const ins = s0.map(v => lerp(v, 0, open));
+    R('clip').style.clipPath = 'inset(' + ins.map(v => v.toFixed(1) + 'px').join(' ') + ')';
+    const fx = (mob ? 0 : .16 * vw) * (1 - open), fy = (mob ? 36 : .07 * vh) * (1 - open), L = ins[3], T = ins[0], B = vh - ins[2];
+    const mk = 'linear-gradient(90deg,transparent ' + L.toFixed(0) + 'px,#000 ' + (L + fx).toFixed(0) + 'px),linear-gradient(180deg,transparent ' + T.toFixed(0) + 'px,#000 ' + (T + fy).toFixed(0) + 'px,#000 ' + (B - fy).toFixed(0) + 'px,transparent ' + B.toFixed(0) + 'px)';
+    const cs = R('clip').style; cs.webkitMaskImage = mk; cs.maskImage = mk; cs.webkitMaskComposite = 'source-in'; cs.maskComposite = 'intersect';
+    R('imgA').style.transform = 'scale(' + (1.08 - .05 * open).toFixed(4) + ')';
+    R('imgA').style.filter = 'saturate(' + lerp(.5, .68, open).toFixed(3) + ') sepia(.14) contrast(1.08) brightness(' + lerp(.8, .88, open).toFixed(3) + ')';
+    this.scrub(still ? .35 : Math.min(1, p / .86));
+    R('shade').style.opacity = lerp(.55, .8, Math.max(open, capIn)).toFixed(3);
+    R('h1').style.transform = 'translate3d(0,' + (-lift * 14).toFixed(2) + 'vh,0)';
+    R('h1').style.opacity = (1 - lift).toFixed(3);
+    R('l2').style.transform = 'translate3d(' + (open * 4).toFixed(2) + 'vw,0,0)';
+    R('sub').style.opacity = (1 - fadeUI).toFixed(3);
+    R('sub').style.transform = 'translate3d(0,' + (fadeUI * 16).toFixed(1) + 'px,0)';
+    R('hint').style.opacity = (1 - io(cl(0, .08))).toFixed(3); R('hint').style.pointerEvents = p > .08 ? 'none' : 'auto';
+    R('cap').style.opacity = (capIn * (1 - out)).toFixed(3);
+    R('cap').style.transform = 'translate3d(0,calc(-50% + ' + ((1 - capIn) * 40 - out * 40).toFixed(1) + 'px),0)';
+    R('line').style.transform = 'scaleX(' + lineT.toFixed(4) + ')';
+    R('prog').style.transform = 'scaleY(' + p.toFixed(4) + ')';
+    R('ivory').style.transform = 'translate3d(0,' + ((1 - out) * 100).toFixed(2) + '%,0)';
+  }
+  scrub(t) {
+    const v = this.hr.imgA.current; if (!v) return;
+    if (!v._init) {
+      v._init = 1;
+      const go = () => { v._ready = 1; this._hp = null; this.q2(); };
+      v.addEventListener('loadedmetadata', go, { once:true });
+      fetch('./assets/hero-film.mp4').then(r => r.blob()).then(b => { if (this._vurl) URL.revokeObjectURL(this._vurl); this._vurl = URL.createObjectURL(b); v.src = this._vurl; v.load(); v.pause(); }).catch(() => { v.src = './assets/hero-film.mp4'; });
+    }
+    if (!v._ready || !v.duration) return;
+    this._vt = (.08 + t * .9) * (v.duration - .05);
+    if (this.vLoop) return;
+    const step = () => {
+      const vv = this.hr.imgA.current; if (!vv) { this.vLoop = false; return; }
+      const d = this._vt - vv.currentTime;
+      if (Math.abs(d) < .012) { this.vLoop = false; return; }
+      if (!vv.seeking) vv.currentTime = vv.currentTime + d * (this.rm ? 1 : .14);
+      requestAnimationFrame(step);
+    };
+    this.vLoop = true; requestAnimationFrame(step);
+  }
+  q2() { this.queue && this.queue(); }
+  pvEnter(i) {
+    const pv = this.pvRef.current; if (!pv) return;
+    pv.querySelectorAll('[data-pv]').forEach(p => {
+      const on = +p.dataset.pv === i; p.style.opacity = on ? '1' : '0';
+      const im = p.querySelector('[data-pvimg]');
+      if (on && im && !this.rm && this.pvCur !== i) im.animate([{ transform:'scale(1.14) translateY(4%)' }, { transform:'scale(1) translateY(0)' }], { duration:1100, easing:'cubic-bezier(.2,.7,.1,1)' });
+    });
+    this.pvCur = i;
+    pv.style.opacity = '1'; this.pvOn = true;
+  }
+  pvMove(e) {
+    this.tx = e.clientX + 36; this.ty = e.clientY - 170;
+    if (this.px == null) { this.px = this.tx; this.py = this.ty; }
+    if (this.pvLoop) return;
+    const step = () => {
+      const pv = this.pvRef.current; if (!pv) { this.pvLoop = false; return; }
+      const k = this.rm ? 1 : 0.12;
+      this.px += (this.tx - this.px) * k; this.py += (this.ty - this.py) * k;
+      const rot = Math.max(-6, Math.min(6, (this.tx - this.px) * 0.04));
+      pv.style.transform = 'translate3d(' + this.px.toFixed(1) + 'px,' + this.py.toFixed(1) + 'px,0) rotate(' + rot.toFixed(2) + 'deg)';
+      if (this.pvOn || Math.abs(this.tx - this.px) > 0.5) requestAnimationFrame(step); else this.pvLoop = false;
+    };
+    this.pvLoop = true; requestAnimationFrame(step);
+  }
+  pvLeave() { const pv = this.pvRef.current; this.pvOn = false; this.pvCur = -1; if (pv) pv.style.opacity = '0'; }
+
+  async navigate(path, fromPop) {
+    if (this.busy) return;
+    if (path === this.state.route) { window.scrollTo({ top:0, behavior:this.rm ? 'auto' : 'smooth' }); this.setState({ menu:false }); return; }
+    const swap = () => {
+      if (!fromPop) { try { history.pushState(null, '', '#' + path); } catch (e) {} }
+      this.pvLeave(); this._fitted = false; this.setState({ route:path, menu:false, sent:false, active:null }); window.scrollTo(0, 0);
+    };
+    const ov = this.ovRef.current;
+    if (!ov) { swap(); return; }
+    this.busy = true;
+    const q = s => ov.querySelector('[data-ov="' + s + '"]');
+    const gold = q('gold'), dark = q('dark'), rect = q('rect'), lab = q('label');
+    q('t').textContent = labelFor(path, this.state.lang); q('p').textContent = path;
+    const E = 'cubic-bezier(.76,0,.24,1)', anims = [];
+    const A = (el, kf, o) => { const a = el.animate(kf, Object.assign({ fill:'forwards', easing:E }, o)); anims.push(a); return a; };
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const mode = this.props.transition ?? 'Altın kıvrım';
+    ov.style.visibility = 'visible';
+    if (this.rm || mode === 'Sade geçiş') {
+      const d = this.rm ? 160 : 520;
+      A(rect, [{ opacity:0 }, { opacity:1 }], { duration:d }); await wait(d + 20); swap();
+      A(rect, [{ opacity:1 }, { opacity:0 }], { duration:d + 150, delay:80 }); await wait(d + 280);
+    } else if (mode === 'Perde') {
+      A(rect, [{ opacity:1, transform:'translateY(100%)' }, { opacity:1, transform:'translateY(0%)' }], { duration:850 });
+      A(lab, [{ opacity:0, transform:'translateY(20px)' }, { opacity:1, transform:'translateY(0)' }], { duration:500, delay:520 });
+      await wait(980); swap(); await wait(260);
+      A(lab, [{ opacity:1 }, { opacity:0 }], { duration:300 });
+      A(rect, [{ opacity:1, transform:'translateY(0%)' }, { opacity:1, transform:'translateY(-100%)' }], { duration:850, delay:180 });
+      await wait(1080);
+    } else {
+      A(gold, [{ strokeDashoffset:1 }, { strokeDashoffset:0 }], { duration:820 });
+      A(dark, [{ strokeDashoffset:1 }, { strokeDashoffset:0 }], { duration:820, delay:150 });
+      A(rect, [{ opacity:0 }, { opacity:1 }], { duration:140, delay:880 });
+      A(lab, [{ opacity:0, transform:'translateY(20px)' }, { opacity:1, transform:'translateY(0)' }], { duration:520, delay:600 });
+      await wait(1040); swap(); await wait(280);
+      A(lab, [{ opacity:1, transform:'translateY(0)' }, { opacity:0, transform:'translateY(-14px)' }], { duration:320 });
+      A(rect, [{ opacity:1 }, { opacity:0 }], { duration:120, delay:200 });
+      A(dark, [{ strokeDashoffset:0 }, { strokeDashoffset:-1 }], { duration:880, delay:200 });
+      A(gold, [{ strokeDashoffset:0 }, { strokeDashoffset:-1 }], { duration:880, delay:300 });
+      await wait(1220);
+    }
+    anims.forEach(a => a.cancel());
+    ov.style.visibility = 'hidden'; this.busy = false;
+  }
+
+  renderVals() {
+    const { route, narrow, menu, sent } = this.state, lg = I18N[this.state.lang] ? this.state.lang : 'tr', t = I18N[lg], U = x => UPL(x, lg);
+    this.applyLang(lg);
+    const parts = route.split('?')[0].split('/').filter(Boolean);
+    const areaObjs = AREAS.map((a0, i) => { const a = lg === 'tr' ? a0 : { ...a0, ...AREA_T[lg][i] };
+      return { ...a, i, name:U(a.title), no:String(i + 1).padStart(2, '0'), href:'#/calisma-alanlarimiz/' + a.slug, path:'/calisma-alanlarimiz/' + a.slug,
+        scope:a.scope.map((x, j) => ({ no:String(j + 1).padStart(2, '0'), text:x })), scopeTop:a.scope.slice(0, 3).map(x => ({ text:x })), img:IMGU(a.img) }; });
+    const lawyers = LAWYERS.map(l => lawyerL(l, lg));
+    const areaIdx = parts[0] === 'calisma-alanlarimiz' && parts[1] ? areaObjs.findIndex(a => a.slug === parts[1]) : -1;
+    const lawIdx = parts[0] === 'avukatlarimiz' && parts[1] ? lawyers.findIndex(l => l.slug === parts[1]) : -1;
+    const isAbout = route === '/hakkimizda', isAreas = route === '/calisma-alanlarimiz', isTeam = route === '/avukatlarimiz',
+      isInsights = route === '/hukuki-bilgiler', isContact = parts[0] === 'iletisim', isArea = areaIdx >= 0, isLawyer = lawIdx >= 0;
+    const isHome = !(isAbout || isAreas || isTeam || isInsights || isContact || isArea || isLawyer);
+    const arts = ARTICLES.map((a0, i) => { const a = lg === 'tr' ? a0 : { ...a0, ...ART_T[lg][i] }; return { ...a, catUpper:U(a.cat), img:a.src || IMGU(a.img, 1000), offset:['0px','14vh','5vh'][i % 3] }; });
+    const channels = [['phone', t.chPhone, t.ctaCall, v => 'tel:' + v.replace(/[^+\d]/g, '')], ['email', t.chEmail, t.ctaMail, v => 'mailto:' + v], ['whatsapp', t.chWa, t.ctaWa, v => 'https://wa.me/' + v.replace(/\D/g, '')]]
+      .filter(c => (CONTACT[c[0]] || '').trim()).map(c => ({ label:c[1], value:CONTACT[c[0]], cta:c[2], href:c[3](CONTACT[c[0]]) }));
+    return {
+      t, wide:!narrow, narrow, menuOpen:narrow && menu, menuLabel:menu ? t.close : t.menu,
+      toggleMenu:() => this.setState(s => ({ menu:!s.menu })),
+      langs:LANGS.map(L => ({ ...L, color:L.id === lg ? '#F7F4ED' : '#8f8b84', line:L.id === lg ? '#B08A45' : 'transparent', pick:() => this.setLang(L.id) })),
+      navBgRef:this.navBgRef, hr:this.hr, ovRef:this.ovRef,
+      navItems:navFor(lg).map(n => ({ ...n, active:n.href === '#/' ? parts.length === 0 : ('#' + route).startsWith(n.href) })),
+      isHome, isAbout, isAreas, isArea, isTeam, isLawyer, isInsights, isContact, showCta:!isContact,
+      areas:areaObjs, lawyers, latest:arts.slice(0, 3),
+      area:isArea ? areaObjs[areaIdx] : areaObjs[0], next:areaObjs[((isArea ? areaIdx : 0) + 1) % areaObjs.length],
+      lawyer:isLawyer ? lawyers[lawIdx] : lawyers[0], otherLawyer:lawyers[((isLawyer ? lawIdx : 0) + 1) % lawyers.length],
+      principles:t.principles, articles:arts, channels, hasChannels:channels.length > 0,
+      locations:LAWYERS.map((l0, i) => { const k = !!mapsKey(), l = lawyerL(l0, lg); return { no:String(i + 1).padStart(2, '0'), name:l.full, address:l.address, districtUpper:l.districtUpper,
+        mapRef:this.locRefs[l.slug].map, wrapRef:this.locRefs[l.slug].wrap, useJsMap:k, useEmbed:!k, embedTitle:l.full + ' — ' + t.mapTitle,
+        embedSrc:'https://maps.google.com/maps?q=' + encodeURIComponent(l0.address + ', ' + l0.district + ', İstanbul') + '&hl=' + lg + '&z=16&output=embed' }; }),
+      sent, notSent:!sent, submit:e => { e.preventDefault(); this.setState({ sent:true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
