@@ -1,0 +1,13 @@
+{
+  "name": "gk-avrasya-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "npm run build && npx --yes serve@14 dist -l 4173"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
